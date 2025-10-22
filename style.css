@@ -101,4 +101,52 @@
             background: #6dba4c;
 
         }
-  
+        .text-primary-custom {
+            color: #FF0000;
+        }
+
+        .text-secondary-custom {
+            color: #6dba4c;
+        }
+
+        /* Botones personalizados */
+        .btn-primary-custom {
+            background-color: #FF0000;
+            border: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .btn-primary-custom:hover {
+            background-color: #BBBD63;
+            color: #000;
+        }
+
+        .btn-secondary-custom {
+            background-color: #6dba4c;
+            border: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .btn-secondary-custom:hover {
+            background-color: #BBBD63;
+            color: #000;
+        }
+
+        /* Fondo del modal */
+        .login-modal {
+            background-color: #fefefe;
+            border-radius: 15px;
+        }
+
+        /* Inputs personalizados */
+        .input-custom:focus {
+            border-color: #6dba4c;
+            box-shadow: 0 0 0 0.2rem rgba(109, 186, 76, 0.25);
+        }
+
+        /* Fuente general del formulario */
+        .login-modal label,
+        .login-modal a,
+        .login-modal h5 {
+            color: #333;
+        }
