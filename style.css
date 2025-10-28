@@ -1,5 +1,91 @@
 
 
+
+/* Estilos iniciales para la transición */
+.card-hover-effect {
+  transition: all 0.3s ease-in-out;
+  border: 1px solid #dee2e6; /* Borde de Bootstrap para cards */
+}
+
+/* Estilos al pasar el mouse */
+.card-hover-effect:hover {
+  background-color: #eef2ea;
+  
+  border: 1px solid rgba(0, 0, 0, 0.3); 
+  
+  transform: scale(1.02); 
+  
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.6);
+  
+  z-index: 10; 
+}
+
+.card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+.carousel-inner {
+  padding: 0 2rem;
+}
+
+@media (max-width: 768px) {
+  .card img {
+    height: 180px;
+  }
+}
+
+
+
+
+.carousel-item img {
+  max-height: 400px; /* o usa max-height: 50vh; */
+  object-fit: cover; /* recorta sin deformar */
+}
+
+
+/* Limita el tamaño de los logos para que no sean demasiado grandes y se vean uniformes */
+.logo-multi-img {
+    max-height: 300px; /* Tamaño máximo para logos */
+    width: auto;
+    opacity: 0.6; 
+    /* Efecto de hover opcional, si quieres que se resalten al pasar el ratón */
+    transition: opacity 0.3s ease;
+}
+
+.logo-multi-img:hover {
+    opacity: 1;
+}
+
+/* Mejora el diseño de las flechas de navegación */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    /* Color de la flecha, por ejemplo, gris oscuro */
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0.4); 
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+}
+
+/* Asegura que el icono dentro de la flecha se vea blanco */
+.carousel-control-prev-icon::before {
+    content: '<';
+    color: white;
+    font-weight: bold;
+    display: block;
+    line-height: 1.5rem;
+}
+
+.carousel-control-next-icon::before {
+    content: '>';
+    color: white;
+    font-weight: bold;
+    display: block;
+    line-height: 1.5rem;
+}
+
+
         /* --- ESTILO PARA TEXTO CON BORDE (LOGO CONACICA) --- */
 
 .logo-stroked {
