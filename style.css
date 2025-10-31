@@ -26,7 +26,7 @@
 }
 
 .carousel-inner {
-  padding: 0 2rem;
+  padding: 0 0rem;
 }
 
 @media (max-width: 768px) {
@@ -57,24 +57,55 @@
     opacity: 1;
 }
 
-/* Mejora el diseño de las flechas de navegación */
+/* ------------------------------------------------ */
+/* --- ESTILOS CRÍTICOS DEL CARRUSEL CORREGIDOS --- */
+/* ------------------------------------------------ */
+
+/* 1. Las flechas deben tener el Z-INDEX MÁS ALTO y ser clicables */
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 9999 !important; /* Fuerza máxima de apilamiento para asegurar el clic */
+}
+
+/* 2. Estilo para la CAPTION de Bootstrap (que funciona como tu overlay) */
+.carousel-caption {
+    /* Ocupa el 100% del alto y ancho del slide para simular el overlay */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    
+    /* Configura el fondo inicialmente transparente y añade la transición */
+    background-color: transparent; 
+    transition: background-color 0.3s ease-in-out; 
+    
+    /* El z-index de la caption es lo suficientemente bajo para que las flechas lo superen */
+}
+
+/* 3. Efecto al pasar el ratón: aplica el fondo oscuro */
+.carousel-item:hover .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6); /* Oscuro al hacer hover */
+}
+
+
+/* Mejora el diseño visual de las flechas de navegación (no afecta la funcionalidad) */
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    /* Color de la flecha, por ejemplo, gris oscuro */
     background-image: none;
     background-color: rgba(0, 0, 0, 0.4); 
     border-radius: 50%;
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem; 
+    height: 2.5rem;
 }
 
-/* Asegura que el icono dentro de la flecha se vea blanco */
+/* El contenido visible dentro de la flecha */
 .carousel-control-prev-icon::before {
     content: '<';
     color: white;
     font-weight: bold;
     display: block;
-    line-height: 1.5rem;
+    line-height: 2.5rem; 
+    text-align: center;
 }
 
 .carousel-control-next-icon::before {
@@ -82,8 +113,12 @@
     color: white;
     font-weight: bold;
     display: block;
-    line-height: 1.5rem;
+    line-height: 2.5rem; 
+    text-align: center;
 }
+
+
+
 
 
         /* --- ESTILO PARA TEXTO CON BORDE (LOGO CONACICA) --- */
@@ -236,3 +271,33 @@
         .login-modal h5 {
             color: #333;
         }
+
+
+        /* Asegura que el contenedor tenga la posición base */
+.contenedor-imagen {
+     overflow: hidden;
+
+}
+
+/* Estilo inicial del Panel (Overlay) */
+
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.6); /* Oscuro con 60% de opacidad */
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.3s ease-in-out; /* Transición suave */
+    z-index: 20; /* Nivel 20, menor que las flechas (50) pero mayor que las imágenes (1) */
+    pointer-events: none; /* CLAVE: Permite que los clics pasen a los elementos debajo (las flechas) */
+    margin: 0;
+
+}
+
+.contenedor-imagen:hover .overlay {
+    opacity: 1;
+    /* QUITAMOS pointer-events: none; en hover si queremos que el texto sea seleccionable/clicable */
+}
+
+/* Estilo para el texto dentro del overlay */
+.overlay p {
+    margin: 0;
+}
