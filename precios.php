@@ -10,38 +10,8 @@
 
 </head>
 <body>
+    <?php include 'nav.php'; ?>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-green sticky-top shadow-sm">
-    <div class="container">
-        <a class="navbar-brand fw-bold text-light fs-1 logo-stroked" href="index.html">CONACICA</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto fw-semibold">
-                <li class="nav-item"><a class="nav-link active" href="index.html">Quiénes Somos</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Servicios/Apoyo</a>
-                    <ul class="dropdown-menu bg-green">
-                        <li><a class="dropdown-item" href="cursos.html">Cursos y Capacitación</a></li>
-                        <li><a class="dropdown-item" href="directorio.html">Directorio Mayorista</a></li>
-                        <li><a class="dropdown-item" href="ruta/a/alianzas.html">Vacantes</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link active dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Información</a>
-                    <ul class="dropdown-menu bg-green">
-                        <li><a class="dropdown-item text-dark" href="precios.html">Precios de Mercado</a></li>
-                        <li><a class="dropdown-item" href="ruta/a/blog.html">Blog / Noticias</a></li>
-                        <li><a class="dropdown-item" href="ruta/a/alianzas.html">Alianzas</a></li>
-
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link active" href="#contacto">Contacto</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
 <section id="precios-mercado" class="py-5">
     <div class="container">
         <h2 class="text-center fw-bold mb-2 text-dark">
@@ -127,35 +97,8 @@
 
     </div>
 </section>
+    <?php include 'footer.php'; ?>
 
-    <footer id="contacto" class="bg-green text-white pt-5 pb-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold text-dark">Contacto</h5>
-                    <ul class="list-unstyled small">
-                        <li><i class="fas fa-map-marker-alt me-2"></i> Dirección de Oficinas Centrales</li>
-                        <li><i class="fas fa-phone me-2"></i> +52 55 XXXX XXXX</li>
-                        <li><i class="fas fa-envelope me-2"></i> info@conacica.org</li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold text-dark">Enlaces Rápidos</h5>
-                    <ul class="list-unstyled small">
-                        <li><a href="ruta/a/directorio.html" class="text-white text-decoration-none">Directorio Mayorista</a></li>
-                        <li><a href="ruta/a/precios.html" class="text-white text-decoration-none">Consulta de Precios</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4 mb-4 text-md-end">
-                    <h5 class="fw-bold text-dark">Síguenos</h5>
-                    <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-2x"></i></a>
-                    <a href="#" class="text-white me-3"><i class="fab fa-x fa-2x"></i></a>
-                    <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-2x"></i></a>
-                    <p class="mt-3 small">&copy; 2025 CONACICA Todos los derechos reservados.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
