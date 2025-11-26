@@ -56,7 +56,7 @@
     <div class="container-fluid p-0">
         <div class="row row-full-height g-0 align-items-center">
             
-            <div class="col-lg-6 p-5 d-flex flex-column justify-content-center"> 
+            <div class="col-lg-6 p-5 d-flex flex-column justify-content-center animation"> 
                 <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4">Nosotros</h2>
                     <p class="lead fw-normal">
                         Realizamos acciones en apoyo al fortalecimiento y profesionalización del sector Agroalimentario, 
@@ -68,7 +68,7 @@
             </div>
 
             <div class="col-lg-6 p-2 col-img-full"> 
-                <img src="campo.jpg" class="d-block w-100" alt="Imagen de Productores">
+                <img src="campo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
             </div>
             
         </div>
@@ -77,11 +77,11 @@
 
 <section id="nuestros-pilares" class="container-fluid py-3 px-5">
      
-     <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-4">Nuestros Pilares</h3>
+     <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-4 animation">Nuestros Pilares</h3>
 
                       
 
-    <div class="row g-4">
+    <div class="row g-4 animation">
         
         <div class="col-lg-4 col-md-6">
             <div class="card bg-light shadow-sm h-100 card-hover-effect">
@@ -116,10 +116,10 @@
  <!-- SECCIÓN: BENEFICIOS -->
   <section id="pilares" class="bg-light p-5 pb-0">
     <div class="container-fluid text-center">
-      <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-1 fs-1">Beneficios CONACICA</h3>
-      <p class="text-muted mb-4 text-start">Trabajamos dando apoyo a nuestra comunidad.</p>
+      <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-1 fs-1 animation">Beneficios CONACICA</h3>
+      <p class="text-muted mb-4 text-start animation">Trabajamos dando apoyo a nuestra comunidad.</p>
 
-      <div class="row justify-content-center g-4">
+      <div class="row justify-content-center g-4 animation">
         <div class="col-lg-3 col-md-6">
           <div class="card h-100 card-hover-effect">
             <div class="card-body p-4">
@@ -174,15 +174,15 @@
         <div class="row row-full-height g-0 align-items-center">
             
             <div class="col-lg-6 p-5 d-flex flex-column justify-content-center"> 
-                <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4">Nuestras Participaciones</h2>
-                    <p class="lead fw-normal">
+                <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4 animation">Nuestras Participaciones</h2>
+                    <p class="lead fw-normal animation">
                         Nuestra Huella en el Desarrollo Nacional De congresos a foros especializados,
                          CONACICA es un actor indispensable en la agenda agroalimentaria de México. 
                          Explore nuestra galería y descubra cómo llevamos nuestra misión de integración 
                          y profesionalización a los escenarios más importantes.
                     </p>
 
-                    <div class="d-flex justify-content-end">
+                    <div class="d-flex justify-content-end animation">
                       <a href="participaciones.php" class="btn btn-lg rounded-pill btn-cta-hero1 m-3">Ver más participaciones</a>
 
                     </div>
@@ -190,7 +190,7 @@
                 
             </div>
 
-           <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative"> 
+           <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative animation"> 
                 <img src="img/nuestras-participaciones.jpg" class="d-block w-100" alt="Imagen de Productores">
 
               <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
@@ -208,7 +208,7 @@
     <div class="container-fluid py-4 my-3">
         <div class="row row-full-height g-0 align-items-center">
             
-            <div class="col-lg-6 px-5 d-flex flex-column justify-content-center"> 
+            <div class="col-lg-6 px-5 d-flex flex-column justify-content-center animation"> 
                 <div class="py-5"> 
                   <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4 mt-5">Sabor autentico con productos 100% mexicanos</h2>
                     <p class="lead fw-normal">
@@ -224,10 +224,8 @@
                 </div>
                 
             </div>
-
-           <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative"> 
-                                          <img src="img/sanpedro-logo.jpg" class="d-block w-100" alt="Imagen de Productores">
-
+            <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative"> 
+              <img src="img/sanpedro-logo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
             </div>
 
            
@@ -264,22 +262,19 @@
   <!-- SECCIÓN: ALIANZAS -->
 <section id="alianzas" class="py-2">
     <div class="container-fluid p-5 text-start">
-      <h3 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-1">Alianzas</h3>
-      <p class="text-muted mb-4">Trabajamos con líderes académicos y empresariales que fortalecen el sector agroalimentario de México.</p>
+      <h3 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-1 animation">Alianzas</h3>
+      <p class="text-muted mb-4 animation">Trabajamos con líderes académicos y empresariales que fortalecen el sector agroalimentario de México.</p>
 
-      <div class="logo-marquee shadow-sm rounded-4 py-4 bg-white">
-  <div class="logo-track">
-    <div class="logo-wrapper"><img src="img/UBC-LOGO.png" alt="UBC"></div>
-    <div class="logo-wrapper"><img src="img/kevallevar-logo.png" alt="Kevallevar"></div>
-    <div class="logo-wrapper"><img src="img/lareina-logo.jpg" alt="Conacica"></div>
-    <div class="logo-wrapper"><img src="img/casalucio-logo.jpg" alt="Company"></div>
-    <div class="logo-wrapper"><img src="img/sanpedro-logo.jpg" alt="Company 2"></div>
-
-    <!-- duplicados para loop infinito -->
-    
-
-  </div>
-</div>
+      <div class="logo-marquee shadow-sm rounded-4 py-4 bg-white animation">
+        <div class="logo-track">
+          <div class="logo-wrapper"><img src="img/UBC-LOGO.png" alt="UBC"></div>
+          <div class="logo-wrapper"><img src="img/kevallevar-logo.png" alt="Kevallevar"></div>
+          <div class="logo-wrapper"><img src="img/lareina-logo.jpg" alt="Conacica"></div>
+          <div class="logo-wrapper"><img src="img/casalucio-logo.jpg" alt="Company"></div>
+          <div class="logo-wrapper"><img src="img/sanpedro-logo.jpg" alt="Company 2"></div>
+          <!-- duplicados para loop infinito -->
+        </div>
+      </div>
 
     </div>
 </section>
@@ -291,5 +286,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="alianzas.js"></script>
+  <script src="animations.js"></script>
 </body>
 </html>

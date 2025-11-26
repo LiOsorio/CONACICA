@@ -1010,3 +1010,18 @@
     text-transform: uppercase; /* MAYÚSCULAS para énfasis */
     margin-bottom: 0.5rem; /* Espacio debajo del título */
 }
+
+/* animaciones de index */
+
+.animation{
+  opacity: 0;
+  scale: 0;
+  transition: 600ms ease;
+  translate: 0 -50%
+}
+
+.animationShow{
+  scale: 1;
+  opacity:1;
+  translate: 0 0;
+}
