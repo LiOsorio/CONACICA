@@ -69,7 +69,7 @@
                     
                 <div class="col-md-4 mb-4">
                     <div class="card h-100 shadow-sm">
-                        <img src="<?php echo $res['images'] ?>" class="card-img-top" alt="Noticia 1">
+                        <img src="./img/<?php echo $res['images'] ?>" class="card-img-top" alt="Noticia 1">
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $res['title'] ?></h5>
                             <p class="card-text text-muted small"><?echo $res['area']?></p>

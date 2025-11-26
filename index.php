@@ -235,7 +235,30 @@
     </div>
 </section>
  
-
+<div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow login-modal">
+                <form action="./validaciones/loginVal.php" method="POST" class="p-4 rounded">
+                    <div class="text-center mb-3">
+                        <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                        <h5 class="fw-bold text-primary-custom">Iniciar sesión</h5>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user" class="form-label fw-semibold">Correo electrónico</label>
+                        <input type="text" name="user" class="form-control form-control-lg input-custom" id="user" placeholder="Usuario" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label fw-semibold">Contraseña</label>
+                        <input type="password" name="pwd" class="form-control form-control-lg input-custom" id="password" placeholder="••••••••" required>
+                    </div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary-custom">Ingresar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
 
   <!-- SECCIÓN: ALIANZAS -->
