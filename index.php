@@ -1,8 +1,11 @@
 <?php 
     session_start();
+    $error ='';
+    
     if(!empty($_SESSION['error'])){
         $error = $_SESSION['error'];
     }
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -52,35 +55,56 @@
 
 <section>
 
+<?php if( !empty( $_SESSION[ 'userId' ] ) ){?>
+  <div class="modal fade" id="modalEditarNosotros" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalAgregar" aria-hidden="true">
+      <div class="modal-dialog modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3">
+              <form action="crudCourses/agregarCurso.php" method="POST" enctype="multipart/form-data">
+                  <div class="text-center mb-3">
+                      <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                      <h5 class="fw-bold text-primary-custom">Modificar Nosotros</h5>
+                  </div>
+                  <div class="d-flex justify-content-center flex-column gap-2 m-3">
+                      <label for="descr" > Descripcion: </label>
+                      <textarea name="descr" id="descr"></textarea>
+                      <label for="imgCourse"></label>
+                      <input type="file" id="imgCourse" name="imgCourse" accept="image/jpeg, image/png" placeholder="Ingresa la imagen del curso">
+                  </div>
+                  <div class="d-flex justify-content-end gap-2 m-3">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-warning" >Agregar</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </div>
+<?php } ?>
+
 <section id="nosotros-mega-card" class="bg-light">
     <div class="container-fluid p-0">
-        <div class="row row-full-height g-0 align-items-center">
-            
-            <div class="col-lg-6 p-5 d-flex flex-column justify-content-center animation"> 
-                <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4">Nosotros</h2>
-                    <p class="lead fw-normal">
-                        Realizamos acciones en apoyo al fortalecimiento y profesionalización del sector Agroalimentario, 
-                        mediante la creación de vínculos con las Centrales de Abasto, Transportistas, Productores Agrícolas 
-                        y Mercados Públicos.
-                    </p>
-                </div>
-                
-            </div>
-
-            <div class="col-lg-6 p-2 col-img-full"> 
-                <img src="campo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
-            </div>
-            
+      <div class="row row-full-height g-0 align-items-center">
+        <div class="col-lg-6 p-5 d-flex flex-column justify-content-center animation"> 
+          <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4">Nosotros</h2>
+              <p class="lead fw-normal">
+                  Realizamos acciones en apoyo al fortalecimiento y profesionalización del sector Agroalimentario, 
+                  mediante la creación de vínculos con las Centrales de Abasto, Transportistas, Productores Agrícolas 
+                  y Mercados Públicos.
+              </p>
+              <?php if( !empty( $_SESSION['userId'] ) ): ?>
+                <button class="btn btn-warning " data-bs-toggle="modal" data-bs-target="#modalEditarNosotros">Editar</button>
+              <?php endif; ?>
+          </div>
+          
         </div>
+        <div class="col-lg-6 p-2 col-img-full"> 
+            <img src="campo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
+        </div>
+      </div>
     </div>
 </section>
 
 <section id="nuestros-pilares" class="container-fluid py-3 px-5">
-     
-     <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-4 animation">Nuestros Pilares</h3>
-
-                      
-
+    <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-4 animation">Nuestros Pilares</h3>
     <div class="row g-4 animation">
         
         <div class="col-lg-4 col-md-6">
