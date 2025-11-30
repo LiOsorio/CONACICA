@@ -1,5 +1,9 @@
 <?php 
     session_start();
+
+    include_once "./config/Connection.php";
+
+    $conn = connection();
     $error ='';
     
     if(!empty($_SESSION['error'])){
@@ -213,7 +217,7 @@
                 <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
                   <div class="col-6 d-flex justify-content-center flex-column mx-auto">
                     <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
-                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/indexImg/nuestras-participaciones.jpg" alt="Nosotros Imagen">
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/indexImg/participaciones.webp" alt="Nosotros Imagen">
                   </div>
                   <div class="col-4 d-flex flex-column justify-content-center mx-auto">
                     <label for="imgParticipaciones" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
@@ -254,88 +258,159 @@
             </div>
 
             <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative animation"> 
-              <img src="./img/indexImg/nuestras-participaciones.jpg" class="d-block w-100" alt="Imagen de Productores">
-
-              <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
-                <p class="text-center p-3">
-                  Descripción sobre participacion<br>
-                </p>
-              </div>
+              <img src="./img/indexImg/participaciones.webp" class="d-block w-100" alt="Imagen de Productores">
             </div>
             
         </div>
     </div>
 </section>
 
+<?php 
+  $sql = "SELECT * FROM promocional WHERE active = 1 LIMIT 1 ";
+  
+  $stmt = $conn -> prepare($sql);
+  $stmt -> execute();
+  $res = $stmt -> fetch();
+
+?>
+
 <section id="restaurante-mega-card" class="bg-light">
     <div class="container-fluid py-4 my-3">
         <div class="row row-full-height g-0 align-items-center">
           <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative"> 
-            <img src="img/sanpedro-logo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
+            <img src="./img/indexImg/<?php echo $res['img']; ?>" class="d-block w-100 animation" alt="Imagen de Productores">
           </div>
             <div class="col-lg-6 px-5 d-flex flex-column justify-content-center animation"> 
                 <div class="py-5"> 
-                  <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4 mt-5">Sabor autentico con productos 100% mexicanos</h2>
+                  <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4 mt-5"><?php echo $res['titulo']; ?></h2>
                     <p class="lead fw-normal">
-                        En nuestro restaurante, la autenticidad es la base. Utilizamos ingredientes 100% mexicanos, frescos y de origen local, para recrear los sabores tradicionales que cuentan la historia de nuestro país.
+                      <?php echo $res['descripcion']; ?>
                     </p>
-                    <p class="lead fw-normal">Conozca nuestra cocina, un punto de encuentro entre la tradición y el sabor más puro.</p>
                     <div class="d-flex justify-content-end">
-                      <a href="#" class="btn btn-lg rounded-pill btn-cta-hero1 m-3">Conocenos</a>
+                      <?php if( !empty($_SESSION['userId']) ): ?>
+                        <button class="btn btn-warning rounded-pill m-3" data-bs-toggle="modal" data-bs-target="#modalEditarPromocional">Editar Promocional</button>
+                      <?php endif; ?>
+                      <a href="<?php echo $res['url'] ?>" class="btn btn-lg rounded-pill btn-cta-hero1 m-3">Conócenos</a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
- 
-<div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border-0 shadow login-modal">
-                <form action="./validaciones/loginVal.php" method="POST" class="p-4 rounded">
-                    <div class="text-center mb-3">
-                        <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
-                        <h5 class="fw-bold text-primary-custom">Iniciar sesión</h5>
-                    </div>
-                    <div class="mb-3">
-                        <label for="user" class="form-label fw-semibold">Correo electrónico</label>
-                        <input type="text" name="user" class="form-control form-control-lg input-custom" id="user" placeholder="Usuario" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label fw-semibold">Contraseña</label>
-                        <input type="password" name="pwd" class="form-control form-control-lg input-custom" id="password" placeholder="••••••••" required>
-                    </div>
-                    <div class="d-flex justify-content-end gap-2">
-                        <button type="button" class="btn btn-primary-custom" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-secondary-custom">Ingresar</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 
+<?php if( !empty( $_SESSION[ 'userId' ] ) ){?>
+  <div class="modal fade" id="modalEditarPromocional" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalPromocional" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3">
+              <form action="crudIndex/editIndex.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="promocional" name="action" hidden >
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar datos de promocional</h5>
+                </div>
+                <div class="d-flex flex-column col-12 justify-content-center gap-2">
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="tituloPromocional" class="fw-bold " style="font-size: 20px;">Titulo de la promoción:</label>
+                    <input type="text" id="tituloPromocional" name="tituloPromocional" placeholder="Titulo de la promoción...">
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="descripcionPromocional" class="fw-bold " style="font-size: 20px;">Descripción:</label>
+                    <textarea style="height: 300px; max-height: 300px; min-height: 300px; width: 100%;" class="m-1" id="descripcionPromocional" name="descripcionPromocional" placeholder="Descripción..."></textarea>
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="urlPromocional" class="fw-bold " style="font-size: 20px;">URL de la promoción:</label>
+                    <input type="text" id="urlPromocional" name="urlPromocional" placeholder="URL de la promoción...">
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="imgPromocional" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
+                    <input type="file" id="imgPromocional" name="imgPromocional" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 m-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" >Cambiar Promocional</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+<?php } ?>
 
   <!-- SECCIÓN: ALIANZAS -->
 <section id="alianzas" class="py-2">
     <div class="container-fluid p-5 text-start">
       <h3 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-1 animation">Alianzas</h3>
       <p class="text-muted mb-4 animation">Trabajamos con líderes académicos y empresariales que fortalecen el sector agroalimentario de México.</p>
-
+      <?php if( !empty($_SESSION['userId']) ): ?>
+        <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#modalEditarAlianzas">Editar Alianzas</button>
+      <?php endif; ?>
       <div class="logo-marquee shadow-sm rounded-4 py-4 bg-white animation">
         <div class="logo-track">
-          <div class="logo-wrapper"><img src="img/UBC-LOGO.png" alt="UBC"></div>
-          <div class="logo-wrapper"><img src="img/kevallevar-logo.png" alt="Kevallevar"></div>
-          <div class="logo-wrapper"><img src="img/lareina-logo.jpg" alt="Conacica"></div>
-          <div class="logo-wrapper"><img src="img/casalucio-logo.jpg" alt="Company"></div>
-          <div class="logo-wrapper"><img src="img/sanpedro-logo.jpg" alt="Company 2"></div>
+          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/UBC-LOGO.png" alt="UBC"></div>
+          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/kevallevar-logo.png" alt="Kevallevar"></div>
+          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/lareina-logo.jpg" alt="lareina"></div>
+          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/casalucio-logo.jpg" alt="casalucio"></div>
+          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/sanpedro-logo.jpg" alt="san pedro"></div>
           <!-- duplicados para loop infinito -->
         </div>
       </div>
 
     </div>
 </section>
+<?php if( !empty( $_SESSION[ 'userId' ] ) ){?>
+  <div class="modal fade" id="modalEditarAlianzas" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalAlianzas" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3">
+              <form action="crudIndex/editIndex.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="alianzas" name="action" hidden >
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar alianzas</h5>
+                </div>
+                <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
+                  <div class="col-6 d-flex justify-content-center flex-column mx-auto">
+                    <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/indexImg/participaciones.webp" alt="Nosotros Imagen">
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="imgParticipaciones" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
+                    <input type="file" id="imgParticipaciones" name="imgParticipaciones" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 m-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" >Cambiar Imágen</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+<?php } ?>
 
-
+<div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow login-modal">
+            <form action="./validaciones/loginVal.php" method="POST" class="p-4 rounded">
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom">Iniciar sesión</h5>
+                </div>
+                <div class="mb-3">
+                    <label for="user" class="form-label fw-semibold">Correo electrónico</label>
+                    <input type="text" name="user" class="form-control form-control-lg input-custom" id="user" placeholder="Usuario" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label fw-semibold">Contraseña</label>
+                    <input type="password" name="pwd" class="form-control form-control-lg input-custom" id="password" placeholder="••••••••" required>
+                </div>
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-primary-custom" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-secondary-custom">Ingresar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
     <?php include 'footer.php'; ?>
 
   <!-- SCRIPTS -->
