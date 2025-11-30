@@ -39,8 +39,8 @@ if( $_FILES['imgCourse']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgCours
 }else{
     echo  'La imagen no es valida';
     $_SESSION['error'] = $error;
-    exit;
     header('Location: ../cursos.php');
+    exit;
 }
 
 if( !is_dir( $imageFolder ) ){

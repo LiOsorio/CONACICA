@@ -78,7 +78,7 @@
                             <p><?php echo $res['offers'] ?></p>
                             <div class="">
 
-                                <a href="ruta/a/blog.html" class="btn btn-outline-success m-4">Postularse</a>
+                                <a href="../blog.html" class="btn btn-outline-success m-4">Postularse</a>
                                 <?php if( !empty( $_SESSION[ 'userId' ] ) ): ?>
                                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalBorrar<?php echo $res['id']?>">Borrar</button>
                                 <?php endif; ?>

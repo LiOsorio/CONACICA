@@ -57,23 +57,29 @@
 
 <?php if( !empty( $_SESSION[ 'userId' ] ) ){?>
   <div class="modal fade" id="modalEditarNosotros" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalAgregar" aria-hidden="true">
-      <div class="modal-dialog modal-centered">
+      <div class="modal-dialog modal-xl modal-centered">
           <div class="modal-content border-0 shadow login-modal m-3">
-              <form action="crudCourses/agregarCurso.php" method="POST" enctype="multipart/form-data">
-                  <div class="text-center mb-3">
-                      <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
-                      <h5 class="fw-bold text-primary-custom">Modificar Nosotros</h5>
+              <form action="crudIndex/editIndex.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="nosotros" name="action" hidden >
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar Imágen de Nosotros</h5>
+                    <p class="fw-bold text-center " style="color: #ec4141ff;">Una vez aceptados los cambios, la imágen anterior se eliminará.</p>
+                </div>
+                <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
+                  <div class="col-6 d-flex justify-content-center flex-column mx-auto">
+                    <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/indexImg/nosotros.webp" alt="Nosotros Imagen">
                   </div>
-                  <div class="d-flex justify-content-center flex-column gap-2 m-3">
-                      <label for="descr" > Descripcion: </label>
-                      <textarea name="descr" id="descr"></textarea>
-                      <label for="imgCourse"></label>
-                      <input type="file" id="imgCourse" name="imgCourse" accept="image/jpeg, image/png" placeholder="Ingresa la imagen del curso">
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="imgNosotros" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
+                    <input type="file" id="imgNosotros" name="imgNosotros" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
                   </div>
-                  <div class="d-flex justify-content-end gap-2 m-3">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="submit" class="btn btn-warning" >Agregar</button>
-                  </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 m-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" >Agregar</button>
+                </div>
               </form>
           </div>
       </div>
@@ -81,26 +87,26 @@
 <?php } ?>
 
 <section id="nosotros-mega-card" class="bg-light">
-    <div class="container-fluid p-0">
-      <div class="row row-full-height g-0 align-items-center">
-        <div class="col-lg-6 p-5 d-flex flex-column justify-content-center animation"> 
-          <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4">Nosotros</h2>
-              <p class="lead fw-normal">
-                  Realizamos acciones en apoyo al fortalecimiento y profesionalización del sector Agroalimentario, 
-                  mediante la creación de vínculos con las Centrales de Abasto, Transportistas, Productores Agrícolas 
-                  y Mercados Públicos.
-              </p>
-              <?php if( !empty( $_SESSION['userId'] ) ): ?>
-                <button class="btn btn-warning " data-bs-toggle="modal" data-bs-target="#modalEditarNosotros">Editar</button>
-              <?php endif; ?>
-          </div>
+  <div class="container-fluid p-0">
+    <div class="row row-full-height g-0 align-items-center">
+      <div class="col-lg-6 p-5 d-flex flex-column justify-content-center animation"> 
+        <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4">Nosotros</h2>
+            <p class="lead fw-normal">
+                Realizamos acciones en apoyo al fortalecimiento y profesionalización del sector Agroalimentario, 
+                mediante la creación de vínculos con las Centrales de Abasto, Transportistas, Productores Agrícolas 
+                y Mercados Públicos.
+            </p>
+            <?php if( !empty( $_SESSION['userId'] ) ): ?>
+              <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#modalEditarNosotros">Cambiar Imágen</button>
+            <?php endif; ?>
+        </div>
           
-        </div>
-        <div class="col-lg-6 p-2 col-img-full"> 
-            <img src="campo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
-        </div>
+      </div>
+      <div class="col-lg-6 p-2 col-img-full d-flex justify-content-center"> 
+        <img style="width: auto; height: 500px; object-fit: cover; object-position: center;" src="./img/indexImg/nosotros.webp" class="d-block animation" alt="Imagen de Productores">
       </div>
     </div>
+  </div>
 </section>
 
 <section id="nuestros-pilares" class="container-fluid py-3 px-5">
@@ -193,6 +199,37 @@
     </div>
   </section>
 
+<?php if( !empty( $_SESSION[ 'userId' ] ) ){?>
+  <div class="modal fade" id="modalEditarParticipaciones" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalParticipaciones" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3">
+              <form action="crudIndex/editIndex.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="participaciones" name="action" hidden >
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar Imágen de Participaciones</h5>
+                    <p class="fw-bold text-center " style="color: #ec4141ff;">Una vez aceptados los cambios, la imágen anterior se eliminará.</p>
+                </div>
+                <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
+                  <div class="col-6 d-flex justify-content-center flex-column mx-auto">
+                    <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/indexImg/nuestras-participaciones.jpg" alt="Nosotros Imagen">
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="imgParticipaciones" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
+                    <input type="file" id="imgParticipaciones" name="imgParticipaciones" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 m-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" >Cambiar Imágen</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+<?php } ?>
+
 <section id="participaciones-mega-card" class="bg-light">
     <div class="container-fluid p-0">
         <div class="row row-full-height g-0 align-items-center">
@@ -201,21 +238,23 @@
                 <div class="py-5"> <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4 animation">Nuestras Participaciones</h2>
                     <p class="lead fw-normal animation">
                         Nuestra Huella en el Desarrollo Nacional De congresos a foros especializados,
-                         CONACICA es un actor indispensable en la agenda agroalimentaria de México. 
-                         Explore nuestra galería y descubra cómo llevamos nuestra misión de integración 
-                         y profesionalización a los escenarios más importantes.
+                        CONACICA es un actor indispensable en la agenda agroalimentaria de México. 
+                        Explore nuestra galería y descubra cómo llevamos nuestra misión de integración 
+                        y profesionalización a los escenarios más importantes.
                     </p>
 
                     <div class="d-flex justify-content-end animation">
+                      <?php  if( !empty( $_SESSION['userId'] ) ): ?>
+                        <button class="btn btn-warning rounded-pill m-3" data-bs-toggle="modal" data-bs-target="#modalEditarParticipaciones">Cambiar imágen</button>
+                      <?php endif; ?>
                       <a href="participaciones.php" class="btn btn-lg rounded-pill btn-cta-hero1 m-3">Ver más participaciones</a>
-
                     </div>
                 </div>
                 
             </div>
 
-           <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative animation"> 
-                <img src="img/nuestras-participaciones.jpg" class="d-block w-100" alt="Imagen de Productores">
+            <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative animation"> 
+              <img src="./img/indexImg/nuestras-participaciones.jpg" class="d-block w-100" alt="Imagen de Productores">
 
               <div class="overlay position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center">
                 <p class="text-center p-3">
@@ -231,28 +270,21 @@
 <section id="restaurante-mega-card" class="bg-light">
     <div class="container-fluid py-4 my-3">
         <div class="row row-full-height g-0 align-items-center">
-            
+          <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative"> 
+            <img src="img/sanpedro-logo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
+          </div>
             <div class="col-lg-6 px-5 d-flex flex-column justify-content-center animation"> 
                 <div class="py-5"> 
                   <h2 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-4 mt-5">Sabor autentico con productos 100% mexicanos</h2>
                     <p class="lead fw-normal">
                         En nuestro restaurante, la autenticidad es la base. Utilizamos ingredientes 100% mexicanos, frescos y de origen local, para recrear los sabores tradicionales que cuentan la historia de nuestro país.
                     </p>
-
                     <p class="lead fw-normal">Conozca nuestra cocina, un punto de encuentro entre la tradición y el sabor más puro.</p>
-
                     <div class="d-flex justify-content-end">
                       <a href="#" class="btn btn-lg rounded-pill btn-cta-hero1 m-3">Conocenos</a>
-
                     </div>
                 </div>
-                
             </div>
-            <div class="col-lg-6 p-2 col-img-full contenedor-imagen position-relative"> 
-              <img src="img/sanpedro-logo.jpg" class="d-block w-100 animation" alt="Imagen de Productores">
-            </div>
-
-           
         </div>
     </div>
 </section>
@@ -274,8 +306,8 @@
                         <input type="password" name="pwd" class="form-control form-control-lg input-custom" id="password" placeholder="••••••••" required>
                     </div>
                     <div class="d-flex justify-content-end gap-2">
-                        <button type="button" class="btn btn-secondary-custom" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary-custom">Ingresar</button>
+                        <button type="button" class="btn btn-primary-custom" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-secondary-custom">Ingresar</button>
                     </div>
                 </form>
             </div>
