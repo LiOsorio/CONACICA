@@ -160,6 +160,83 @@
                 header( 'Location: /' );
                 exit;
             }
+        }
+
+        if( $_POST['action'] === 'nuevaAlianza' ){
+            
+            $error;
+            ( !isset( $_POST['nombreNuevaAlianza'] ) || empty( $_POST['nombreNuevaAlianza'] ) ) ? $error = 'El nombre de la alianza no es valido.' : $nombreAlianza = $_POST["nombreNuevaAlianza"];
+            
+            $imgDir = "../img/indexImg/alianzas/".$nombreAlianza .".webp";
+
+            if( $error !== '' ){
+                $_SESSION['error'] = $error;
+                header( 'Location: /' );
+                exit;
+            }
+
+            $sqlVerifAlianza = "SELECT * FROM alianzas WHERE nombre = :nombre";
+
+            $stmt = $conn -> prepare( $sqlVerifAlianza ) ;
+            $stmt -> execute( [ 'nombre' => $nombreAlianza ] );
+            $res = $stmt -> fetch();
+
+            if( $res ){
+                $error = 'Ya existe una alianza con este nombre';
+                $_SESSION['error'] = $error;
+                header( ' Location: / ' );
+                exit;
+            }
+
+            if( $_FILES['imgNuevaAlianza']['error'] === UPLOAD_ERR_OK && !empty($_FILES['imgNuevaAlianza']['name']) ){
+                if( !in_array( $_FILES['imgNuevaAlianza']['type'], $acceptedTypes ) ){
+                    $error = 'Sólo se aceptan imágenes de tipo JPEG, JPG y PNG';
+                    $_SESSION['error'] = $error;
+                    header( 'Location: /' );
+                    exit;
+                }
+                
+                if( $_FILES['imgNuevaAlianza']['size'] > $fileSizeLimit ){
+                    $error = 'El tamaño de la imágen debe ser menor a 3mb.';
+                    $_SESSION['error'] = $error;
+                    header( 'Location: /' );
+                    exit;
+                }
+                $mime = mime_content_type( $_FILES['imgNuevaAlianza']['tmp_name'] );
+            } else {
+                $error = 'La imágen no es valida.';
+                $_SESSION['error'] = $error;
+                header( 'Location: /' );
+                exit;
+            }
+
+            if( $mime === 'image/jpeg' || $mime === 'image/jpg' ){
+                $image = imagecreatefromjpeg( $_FILES['imgNuevaAlianza']['tmp_name'] );
+                imagewebp($image, $imgDir, 50);
+            }
+            if( $mime === 'image/png' ){
+                $image = imagecreatefrompng( $_FILES['imgNuevaAlianza']['tmp_name'] );
+                imagewebp( $image, $imgDir, 50 );
+            }
+
+            
+
+            $sql = "INSERT INTO alianzas ( img, nombre, active ) VALUES ( :imgName, :nombreAlianza, 1 )";
+
+            try{
+                $stmt = $conn -> prepare( $sql );
+                $stmt -> execute([
+                    'imgName' => $nombreAlianza.'.webp',
+                    'nombreAlianza' => $nombreAlianza
+                ]);
+                header( 'Location: /' );
+                exit;
+            }catch( PDOException $e ){
+                $error = "Hubo un error al ingresar la alianza a la base de datos.";
+                $_SESSION['error'] = $error;
+                header( 'Location: /' );
+                exit;
+            }
 
         }
     }

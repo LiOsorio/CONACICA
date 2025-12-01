@@ -338,11 +338,12 @@
 
   <!-- SECCIÓN: ALIANZAS -->
 <section id="alianzas" class="py-2">
-    <div class="container-fluid p-5 text-start">
-      <h3 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-1 animation">Alianzas</h3>
-      <p class="text-muted mb-4 animation">Trabajamos con líderes académicos y empresariales que fortalecen el sector agroalimentario de México.</p>
+    <div class="container-fluid p-5 text-start animation">
+      <h3 class="fw-bold border-start border-conacica-green border-5 ps-3 fs-1 mb-1 ">Alianzas</h3>
+      <p class="text-muted mb-4 ">Trabajamos con líderes académicos y empresariales que fortalecen el sector agroalimentario de México.</p>
       <?php if( !empty($_SESSION['userId']) ): ?>
-        <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#modalEditarAlianzas">Editar Alianzas</button>
+        <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#modalAgregarAlianzas">Agregar Alianzas</button>
+        <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#modalEditarAlianzas">Editar Alianzas Existentes</button>
       <?php endif; ?>
       <div class="logo-marquee shadow-sm rounded-4 py-4 bg-white animation">
         <div class="logo-track">
@@ -358,28 +359,28 @@
     </div>
 </section>
 <?php if( !empty( $_SESSION[ 'userId' ] ) ){?>
-  <div class="modal fade" id="modalEditarAlianzas" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalAlianzas" aria-hidden="true">
-      <div class="modal-dialog modal-xl modal-centered">
-          <div class="modal-content border-0 shadow login-modal m-3">
-              <form action="crudIndex/editIndex.php" method="POST" enctype="multipart/form-data">
-                <input type="text" value="alianzas" name="action" hidden >
+  <div class="modal fade" id="modalAgregarAlianzas" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalAlianzas" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3 col-12">
+              <form class="" action="crudIndex/editIndex.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="nuevaAlianza" name="action" hidden >
                 <div class="text-center mb-3">
                     <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
-                    <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar alianzas</h5>
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 25px;">Agregar alianza</h5>
                 </div>
-                <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
-                  <div class="col-6 d-flex justify-content-center flex-column mx-auto">
-                    <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
-                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/indexImg/participaciones.webp" alt="Nosotros Imagen">
+                <div class="d-flex flex-column col-12 justify-content-center gap-2">
+                  <div class=" d-flex flex-column justify-content-center mx-auto">
+                    <label for="nombreNuevaAlianza" class="fw-bold " style="font-size: 20px;">Nombre de la alianza:</label>
+                    <input type="text" id="nombreNuevaAlianza" name="nombreNuevaAlianza" placeholder="Nombre de la empresa...">
                   </div>
-                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
-                    <label for="imgParticipaciones" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
-                    <input type="file" id="imgParticipaciones" name="imgParticipaciones" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
+                  <div class="d-flex flex-column justify-content-center mx-auto">
+                    <label for="imgNuevaAlianza" class="fw-bold " style="font-size: 20px;">Imagen de la alianza:</label>
+                    <input type="file" id="imgNuevaAlianza" name="imgNuevaAlianza" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
                   </div>
                 </div>
                 <div class="d-flex justify-content-end gap-2 m-3">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-warning" >Cambiar Imágen</button>
+                    <button type="submit" class="btn btn-warning" >Agregar alianza</button>
                 </div>
               </form>
           </div>
