@@ -26,6 +26,10 @@
         header( "location: /" );
         exit;
     }
+    // echo '<pre>';
+    // echo var_dump($_POST);
+    // echo '</pre>';
+    // exit;
 
     if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
         if( $_POST['action'] === 'nosotros' ){
@@ -60,7 +64,12 @@
             }
             if( $mime === 'image/png' ){
                 $image = imagecreatefrompng( $_FILES['imgNosotros']['tmp_name'] );
-                imagewebp( $image, $newImage, 85 );
+                imagewebp( $image, $newFile, 85 );
+                header( 'Location: /' );
+                exit;
+            }
+            if($mime === 'image/webp'){
+                $image = imagecreatefromwebp( $image, $newFile, 100 );
                 header( 'Location: /' );
                 exit;
             }
@@ -237,6 +246,25 @@
                 header( 'Location: /' );
                 exit;
             }
+        }
 
+
+        if( $_POST['action'] === 'editarAlianza' ){  
+
+            $sqlReset = "UPDATE alianzas SET active = 0";
+
+            $stmt = $conn -> prepare( $sqlReset ) -> execute();
+
+            $ids = array_keys( $_POST['active'] );
+            
+            $sql = "UPDATE alianzas SET active = 1 WHERE id IN (" . implode( ',', $ids ) . ") ";
+            
+            try{
+                $stmt = $conn -> prepare( $sql ) -> execute();
+                header( 'Location: /' );
+                exit;
+            } catch( PDOException $e ) {
+                $error = 'Hay un error al subir a la base de datos.';
+            }
         }
     }

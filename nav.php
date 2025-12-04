@@ -8,6 +8,9 @@
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto fw-semibold">
+          <?php if( !empty( $_SESSION['userId'] ) ): ?>
+            <li class="nav-item"><a class="nav-link active" href="admin-dashboard.php">Dashboard</a></li>
+          <?php endif; ?>
           <li class="nav-item"><a class="nav-link active" href="#quienes-somos">Quiénes Somos</a></li>
           <li class="nav-item dropdown">
             <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown">Servicios/Apoyo</a>

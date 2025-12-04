@@ -30,7 +30,7 @@
 </head>
 <body>
 
-  <?php include 'nav.php'; ?>
+  <?php include_once 'nav.php'; ?>
   <!-- HERO (ok solo checar responsive) -->
   <header class="hero-section py-5" id="inicio">
     <div class="container py-5">
@@ -323,7 +323,7 @@
                   </div>
                   <div class="col-4 d-flex flex-column justify-content-center mx-auto">
                     <label for="imgPromocional" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
-                    <input type="file" id="imgPromocional" name="imgPromocional" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
+                    <input type="file" id="imgPromocional" name="imgPromocional" accept="image/jpeg, image/png,image/webp" placeholder="Ingresa la imagen a mostrar">
                   </div>
                 </div>
                 <div class="d-flex justify-content-end gap-2 m-3">
@@ -347,11 +347,20 @@
       <?php endif; ?>
       <div class="logo-marquee shadow-sm rounded-4 py-4 bg-white animation">
         <div class="logo-track">
-          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/UBC-LOGO.png" alt="UBC"></div>
-          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/kevallevar-logo.png" alt="Kevallevar"></div>
+          <?php 
+            $sql = "SELECT * FROM alianzas WHERE active = 1";
+
+            $stmt = $conn -> prepare( $sql );
+            $stmt -> execute();
+            
+            while( $res = $stmt -> fetch() ):
+          ?>
+            <div class="logo-wrapper"><img src="./img/indexImg/alianzas/<?php echo $res['img'] ?>" alt="<?php echo $res['nombre'] ?>"></div>
+          <?php endwhile; ?>
+          <!-- <div class="logo-wrapper"><img src="./img/indexImg/alianzas/kevallevar-logo.png" alt="Kevallevar"></div>
           <div class="logo-wrapper"><img src="./img/indexImg/alianzas/lareina-logo.jpg" alt="lareina"></div>
           <div class="logo-wrapper"><img src="./img/indexImg/alianzas/casalucio-logo.jpg" alt="casalucio"></div>
-          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/sanpedro-logo.jpg" alt="san pedro"></div>
+          <div class="logo-wrapper"><img src="./img/indexImg/alianzas/sanpedro-logo.jpg" alt="san pedro"></div> -->
           <!-- duplicados para loop infinito -->
         </div>
       </div>
@@ -375,7 +384,7 @@
                   </div>
                   <div class="d-flex flex-column justify-content-center mx-auto">
                     <label for="imgNuevaAlianza" class="fw-bold " style="font-size: 20px;">Imagen de la alianza:</label>
-                    <input type="file" id="imgNuevaAlianza" name="imgNuevaAlianza" accept="image/jpeg, image/png" placeholder="Ingresa la imagen a mostrar">
+                    <input type="file" id="imgNuevaAlianza" name="imgNuevaAlianza" accept="image/jpeg, image/png, image/webp" placeholder="Ingresa la imagen a mostrar">
                   </div>
                 </div>
                 <div class="d-flex justify-content-end gap-2 m-3">
@@ -388,6 +397,50 @@
   </div>
 <?php } ?>
 
+<?php 
+  $sqlVerAlianzas = "SELECT * FROM alianzas";
+
+  $stmt = $conn -> prepare( $sqlVerAlianzas );
+  $stmt -> execute();
+?>
+
+<?php if( !empty( $_SESSION[ 'userId' ] ) ){?>
+  <div class="modal fade" id="modalEditarAlianzas" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalAlianzas" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3 col-12">
+              <form class="" action="crudIndex/editIndex.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="editarAlianza" name="action" hidden >
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 25px;">Editar alianzas</h5>
+                </div>
+                <table class="d-flex flex-column col-12 justify-content-center gap-2">
+                  <thead class="col-12">
+                    <tr class="col-12 d-flex flex-row justify-content-around">
+                      <td>Imagen</td>
+                      <td>Nombre</td>
+                      <td>Estado</td>
+                    </tr>
+                  </thead>  
+                  <tbody class="col-12">
+                      <?php while ( $res = $stmt -> fetch() ): ?>
+                        <tr class="col-12 d-flex flex-row justify-content-around ">  
+                          <td class="" style="max-width: 100px; max-height: 100px"><img style="width: 100%; height: auto; object-fit:contain; object-position: center center; display: block;" src="./img/indexImg/alianzas/<?php echo $res['img'] ?>" alt="<?php echo $res['nombre'] ?>"></td>
+                          <td><?php echo $res['nombre'] ?></td>
+                          <td><input name="active[<?php echo $res['id']; ?>]" type="checkbox" <?php if( $res['active'] == '1' ){ echo "checked"; } else { echo ""; } ?> > </td>
+                        </tr>
+                      <?php endwhile; ?>
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-end gap-2 m-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" >Aceptar</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
+<?php } ?>
 <div class="modal fade" id="modalLogin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalLoginLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border-0 shadow login-modal">
