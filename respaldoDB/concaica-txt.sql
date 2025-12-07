@@ -1,4 +1,4 @@
-use conacica
+use conacica;
 
 create table  promocional(
 	promocionalId int primary key not null auto_increment,
@@ -19,4 +19,24 @@ create table alianzas(
 	active bool
 );
 
+CREATE TABLE producto (
+	productoId INT PRIMARY KEY AUTO_INCREMENT,
+	productName varchar(100)
+);
+
+CREATE TABLE central(
+	centralId int PRIMARY KEY auto_increment,
+	centralname varchar(150)
+);
+
+CREATE TABLE preciosRegistrados(
+	preciosId int PRIMARY KEY auto_increment,
+	productoId int,
+	centralId int,
+	unidad ENUM('Mayoreo','Medio Mayoreo','Menudeo') NOT NULL,
+	precio decimal(10,2),
+	fechaActualizacion date,
+	FOREIGN KEY (productoId) REFERENCES producto(productoId),
+	FOREIGN KEY (centralId) REFERENCES	central(centralId)
+);
 

@@ -1,3 +1,14 @@
+<?php 
+    session_start();
+
+    include_once __DIR__ . "/config/Connection.php";
+
+    $conn = connection();
+    $sqlCentral = 'SELECT * FROM central';
+    $sqlProducto = 'SELECT * FROM  producto';
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -47,34 +58,46 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
+                        <?php
+                            $sql = 'SELECT 
+                                    reg.preciosId,
+                                    reg.unidad,
+                                    reg.precio,
+                                    pro.productName,
+                                    cen.centralName
+                                    FROM preciosRegistrados reg
+                                    INNER JOIN producto pro
+                                    ON reg.productoId = pro.productoId
+                                    INNER JOIN central cen
+                                    ON reg.centralId = cen.centralId
+                                ';
+                                try{
+                                    $stmt = $conn -> prepare( $sql );
+                                    $stmt -> execute();
+                                } catch( PDOException $e ) {
+                                    echo '<p>Hubo un error en la base de datos.</p>';
+                                }
+                        ?>
                         <tbody>
+                            <?php while( $res = $stmt -> fetch() ): ?>
                             <tr>
-                                <td>Aguacate Hass</td>
-                                <td>CEDA Iztapalapa</td>
-                                <td>Mayoreo</td>
-                                <td><span class='badge bg-success fs-6'>$65.50</span></td>
+                                <td><?php echo $res['productName'] ?></td>
+                                <td><?php echo $res['centralName'] ?></td>
+                                <td><?php echo $res['unidad'] ?></td>
+                                <td><span class='badge bg-success fs-6'>$<?php echo $res['precio'] ?></span></td>
                                 <td>
                                     <button class='btn btn-sm btn-warning me-2' data-bs-toggle='modal' data-bs-target='#modalEditar'><i class='bi bi-pencil'></i> Editar</button>
                                     <button class='btn btn-sm btn-danger'><i class='bi bi-trash'></i> Eliminar</button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Limón Persa</td>
-                                <td>CEDA Iztapalapa</td>
-                                <td>Medio Mayoreo</td>
-                                <td><span class='badge bg-success fs-6'>$18.90</span></td>
-                                <td>
-                                    <button class='btn btn-sm btn-warning me-2' data-bs-toggle='modal' data-bs-target='#modalEditar'><i class='bi bi-pencil'></i> Editar</button>
-                                    <button class='btn btn-sm btn-danger'><i class='bi bi-trash'></i> Eliminar</button>
-                                </td>
-                            </tr>
+                            <?php endwhile; ?>
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-end">
-         <button class="btn btn-primary btn m-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregar">
+        <button class="btn btn-primary btn m-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#modalAgregar">
             <i class="bi bi-plus-circle me-2"></i> Registrar Nuevo Precio
         </button>
         </div>
@@ -87,56 +110,58 @@
                     <h5 class="modal-title" id="modalAgregarLabel"><i class="bi bi-basket me-2"></i> Registrar Nuevo Precio de Producto</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
-                <form id="form_nuevo_precio_modal" action="guardar_precio.php" method="POST">
+                <form id="form_nuevo_precio_modal" action="./dashboardCrud/gestionPrecios.php" method="POST">
+                    <input type="text" name="action" value="agregarPrecio" hidden>
                     <div class="modal-body row g-3">
-                        
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Producto</label>
+                            <label class="form-label fw-semibold" id="selectNuevoProducto">Producto</label>
+                            <?php 
+                                $stmt = $conn -> prepare( $sqlProducto );
+                                $stmt -> execute();
+                            ?>
                             <div class="input-group">
-                                <select class="form-select" name="producto" required>
-                                    <option value="">Seleccione el producto...</option>
-                                    <option>Aguacate Hass</option>
-                                    <option>Limón Persa</option>
+                                <select class="form-select" name="productoRegistrar" id="selectNuevoProducto" required>
+                                    <option selected disabled>Seleccione producto...</option>
+                                    <?php while( $res = $stmt -> fetch() ): ?>
+                                        <option value="<?php echo $res['productoId'] ?>"><?php echo $res['productName'] ?></option>
+                                    <?php endwhile; ?>
                                 </select>
                                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modalGestionProductos" title="Administrar Productos">
                                     <i class="bi bi-gear"></i>
                                 </button>
                             </div>
                         </div>
-
                         <div class="col-md-6">
-                            <label class="form-label fw-semibold">Central de Abasto</label>
+                            <label class="form-label fw-semibold" for="CentralAbastoLabelAgregarProducto">Central de Abasto</label>
+                            <?php 
+                                $stmt = $conn -> prepare( $sqlCentral );
+                                $stmt -> execute();
+                            ?>
                             <div class="input-group">
-                                <select class="form-select" name="central" required>
-                                    <option value="">Seleccione la Central...</option>
-                                    <option>CEDA Iztapalapa</option>
-                                    <option>CEDA Guadalajara</option>
+                                <select class="form-select" name="centralRegistrar" id="CentralAbastoLabelAgregarProducto" required>
+                                    <option selected disabled>Seleccione la Central...</option>
+                                    <?php while( $res = $stmt -> fetch() ): ?>
+                                        <option value="<?php echo $res['centralId'] ?>"><?php echo $res['centralName'] ?></option>
+                                    <?php endwhile; ?>
                                 </select>
                                 <button class="btn btn-outline-secondary" type="button" data-bs-toggle="modal" data-bs-target="#modalGestionCentrales" title="Administrar Centrales">
                                     <i class="bi bi-gear"></i>
                                 </button>
                             </div>
                         </div>
-
                         <div class="col-md-3">
                             <label class="form-label fw-semibold">Unidad (kg)</label>
-                            <select class="form-select" name="unidad" required>
-                                <option>Menudeo</option>
-                                <option>Mayoreo</option>
-                                <option>Medio mayoreo</option>
+                            <select class="form-select" name="unidadRegistrar" required>
+                                <option value="Menudeo">Menudeo</option>
+                                <option value="Mayoreo">Mayoreo</option>
+                                <option value="Medio Mayoreo">Medio Mayoreo</option>
                             </select>
                         </div>
-
-                       
-
                         <div class="col-md-3">
                             <label class="form-label fw-semibold">Precio Promedio</label>
-                            <input type="number" class="form-control bg-info bg-opacity-10" name="precio_promedio" step="0.01" placeholder="0.00" required>
+                            <input type="number" class="form-control bg-info bg-opacity-10" name="precioRegistrar" step="0.5" placeholder="0.00" required>
                         </div>
-
                     </div>
-
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i> Guardar Registro</button>
@@ -160,9 +185,14 @@
                     <form class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Producto</label>
+                            <?php 
+                                $stmt = $conn -> prepare($sqlProducto);
+                                $stmt -> execute();
+                            ?>
                             <select class="form-select">
-                                <option>Aguacate Hass</option>
-                                <option>Limón Persa</option>
+                                <?php while( $res = $stmt -> fetch() ): ?>
+                                    <option value="<?php echo $res['productoId'] ?>"><?php echo $res['productName'] ?></option>
+                                <?php endwhile; ?>
                             </select>
                         </div>
 
@@ -183,7 +213,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label fw-semibold">Precio Promedio</label>
-                            <input type="number" step="0.01" class="form-control" value="65.50">
+                            <input type="number" step="0.5" class="form-control" value="65.50">
                         </div>
                     </form>
                 </div>
@@ -207,21 +237,26 @@
                 
                 <div class="modal-body">
                     <h6>Agregar Nueva Central</h6>
-                    <div class="input-group mb-4">
-                        <input type="text" class="form-control" placeholder="Nombre de la Central (e.g., CEDA Monterrey)">
-                        <button class="btn btn-primary" type="button"><i class="bi bi-plus-lg"></i> Agregar</button>
-                    </div>
+                    <form action="./dashboardCrud/gestionPrecios.php" method="POST">
+                        <div class="input-group mb-4">
+                            <input type="text" name="action" value="agregarCentral" hidden>
+                            <input type="text" name="agregarNombreCentral" class="form-control" placeholder="Nombre de la Central (e.g., CEDA Monterrey)">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg"></i> Agregar</button>
+                        </div>
+                    </form>
                     
                     <h6>Centrales Registradas</h6>
+                    <?php 
+                        $stmt = $conn -> prepare( $sqlCentral );
+                        $stmt -> execute();
+                    ?>
                     <ul class="list-group">
+                        <?php while( $res = $stmt -> fetch() ): ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            CEDA Iztapalapa
+                            <?php echo $res['centralName'] ?>
                             <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            CEDA Guadalajara
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
-                        </li>
+                        <?php endwhile; ?>
                     </ul>
                 </div>
 
@@ -239,24 +274,29 @@
                     <h5 class="modal-title" id="modalGestionProductosLabel"><i class="bi bi-apple me-2"></i> Administrar Productos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                
                 <div class="modal-body">
                     <h6>Agregar Nuevo Producto</h6>
-                    <div class="input-group mb-4">
-                        <input type="text" class="form-control" placeholder="Nombre del Producto (e.g., Manzana Roja)">
-                        <button class="btn btn-primary" type="button"><i class="bi bi-plus-lg"></i> Agregar</button>
-                    </div>
-                    
+                    <form action="./dashboardCrud/gestionPrecios.php" method="POST">
+                        <div class="input-group mb-4">
+                            <input type="text" name="action" value="NuevoProducto" hidden>
+                            <input type="text" name="agregarNombreProducto" class="form-control" placeholder="Nombre del Producto (e.g., Manzana Roja)">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg"></i> Agregar</button>
+                        </div>
+                    </form>
                     <h6>Productos Registrados</h6>
+                    <?php 
+                        $stmt = $conn -> prepare( $sqlProducto ) ;
+                        $stmt -> execute();
+                        
+                    ?>
                     <ul class="list-group">
+                        <?php while( $res = $stmt -> fetch() ): ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Aguacate Hass
+                            <?php echo $res['productName'] ?>
                             <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
                         </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            Limón Persa
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
-                        </li>
+                        
+                        <?php endwhile; ?>
                     </ul>
                 </div>
 

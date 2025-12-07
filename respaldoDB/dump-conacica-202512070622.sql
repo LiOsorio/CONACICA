@@ -29,7 +29,7 @@ CREATE TABLE `alianzas` (
   `nombre` varchar(150) NOT NULL,
   `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,8 +40,38 @@ LOCK TABLES `alianzas` WRITE;
 /*!40000 ALTER TABLE `alianzas` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `alianzas` VALUES
-(1,'kevallevar.webp','kevallevar',1);
+(1,'kevallevar.webp','kevallevar',1),
+(2,'San Pedro.webp','San Pedro',1),
+(3,'Casa Lucio.webp','Casa Lucio',1),
+(4,'UBC.webp','UBC',1);
 /*!40000 ALTER TABLE `alianzas` ENABLE KEYS */;
+UNLOCK TABLES;
+commit;
+
+--
+-- Table structure for table `central`
+--
+
+DROP TABLE IF EXISTS `central`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `central` (
+  `centralId` int(11) NOT NULL AUTO_INCREMENT,
+  `centralName` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`centralId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `central`
+--
+
+LOCK TABLES `central` WRITE;
+/*!40000 ALTER TABLE `central` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `central` VALUES
+(1,'CEDA Iztapalapa');
+/*!40000 ALTER TABLE `central` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
 
@@ -76,6 +106,69 @@ INSERT INTO `courses` VALUES
 (3,'Marketing Digital B2B para Mayoristas y Centrales de Abasto','Creación de catálogos de productos (precios, calidad, disponibilidad) fáciles de compartir por WhatsApp Business y correo.','Curso intensivo para distribuidores','2025-09-20','✅ Optimización de Rutas\n✅ Manejo de Cadena de Frío\n✅ Certificación en Normatividad','n4.png'),
 (4,'Logística y Manejo de Carga: Conservación de Productos Perecederos','Este curso está diseñado para reducir las pérdidas post-cosecha y optimizar las rutas.','Curso Intensivo para Transportistas','2025-05-06','\n✅ Optimización de Rutas\n✅ Manejo de Cadena de Frío\n✅ Certificación en Normatividad\n','n6.jpg');
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
+UNLOCK TABLES;
+commit;
+
+--
+-- Table structure for table `preciosRegistrados`
+--
+
+DROP TABLE IF EXISTS `preciosRegistrados`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `preciosRegistrados` (
+  `preciosId` int(11) NOT NULL AUTO_INCREMENT,
+  `productoId` int(11) DEFAULT NULL,
+  `centralId` int(11) DEFAULT NULL,
+  `unidad` enum('Mayoreo','Medio Mayoreo','Menudeo') NOT NULL,
+  `precio` decimal(10,2) DEFAULT NULL,
+  `fechaActualizacion` date DEFAULT NULL,
+  PRIMARY KEY (`preciosId`),
+  KEY `productoId` (`productoId`),
+  KEY `centralId` (`centralId`),
+  CONSTRAINT `1` FOREIGN KEY (`productoId`) REFERENCES `producto` (`productoId`),
+  CONSTRAINT `2` FOREIGN KEY (`centralId`) REFERENCES `central` (`centralId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `preciosRegistrados`
+--
+
+LOCK TABLES `preciosRegistrados` WRITE;
+/*!40000 ALTER TABLE `preciosRegistrados` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `preciosRegistrados` VALUES
+(1,1,1,'Menudeo',20.00,'2025-12-07');
+/*!40000 ALTER TABLE `preciosRegistrados` ENABLE KEYS */;
+UNLOCK TABLES;
+commit;
+
+--
+-- Table structure for table `producto`
+--
+
+DROP TABLE IF EXISTS `producto`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `producto` (
+  `productoId` int(11) NOT NULL AUTO_INCREMENT,
+  `productName` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`productoId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `producto`
+--
+
+LOCK TABLES `producto` WRITE;
+/*!40000 ALTER TABLE `producto` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `producto` VALUES
+(1,'Aguacate Hass'),
+(2,'Jitomate Rojo');
+/*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
 
@@ -155,4 +248,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-12-01  2:02:52
+-- Dump completed on 2025-12-07  6:22:56
