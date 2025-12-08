@@ -76,6 +76,40 @@ UNLOCK TABLES;
 commit;
 
 --
+-- Table structure for table `correos`
+--
+
+DROP TABLE IF EXISTS `correos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `correos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(150) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `asunto` varchar(100) NOT NULL,
+  `mensaje` varchar(400) NOT NULL,
+  `fecha` date NOT NULL,
+  `estado` enum('Nuevo','Visto') DEFAULT 'Nuevo',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `correos`
+--
+
+LOCK TABLES `correos` WRITE;
+/*!40000 ALTER TABLE `correos` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `correos` VALUES
+(1,'Gerardo Oswaldo Galicia Flores','o.galicia.0812@gmail.com','Pruebas de php mailer','Espero que funcione!','2025-12-08','Nuevo'),
+(2,'Gerardo Oswaldo Galicia Flores','o.galicia.0812@gmail.com','Pruebas de php mailer','Espero que si se madne bien bien ahora si jaja','2025-12-08','Nuevo'),
+(3,'Gerardo Oswaldo Galicia Flores','o.galicia.0812@gmail.com','Pruebas de php mailer','Ahora siii funciona porfaaa','2025-12-08','Nuevo');
+/*!40000 ALTER TABLE `correos` ENABLE KEYS */;
+UNLOCK TABLES;
+commit;
+
+--
 -- Table structure for table `courses`
 --
 
@@ -248,4 +282,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-12-07  6:22:56
+-- Dump completed on 2025-12-08  2:10:55
