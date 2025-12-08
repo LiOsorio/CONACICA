@@ -52,8 +52,8 @@
 
       <!-- Body -->
       <div class="modal-body">
-        <form action="procesar_contacto.php" method="POST">
-
+        <form action="./crudIndex/contactoIndex.php" method="POST">
+          
           <div class="mb-3">
             <label class="form-label">Nombre completo</label>
             <input type="text" class="form-control" name="nombre" required>
@@ -75,7 +75,7 @@
           </div>
 
           <div class="text-end">
-            <button type="submit" class="btn btn-success">Enviar mensaje</button>
+            <button type="submit" name="action" value="sendMail" class="btn btn-success">Enviar mensaje</button>
           </div>
 
         </form>

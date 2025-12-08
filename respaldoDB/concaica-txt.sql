@@ -40,3 +40,13 @@ CREATE TABLE preciosRegistrados(
 	FOREIGN KEY (centralId) REFERENCES	central(centralId)
 );
 
+CREATE TABLE correos (
+	id int auto_increment primary key,
+	nombre varchar(150) not null,
+	email varchar(100) not null,
+	asuto varchar(100) not null,
+	mensaje varchar(400) not null,
+	fecha date not null,
+	estado enum('Nuevo', 'Visto') default 'Nuevo'
+);
+

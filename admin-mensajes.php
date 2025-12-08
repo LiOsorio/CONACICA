@@ -36,8 +36,17 @@
                         </tr>
                     </thead>
 
-                    <tbody>
+                    <?php 
+                        $sql = 'SELECT * FROM correos';
 
+                        try{
+                            $stmt = $conn -> prepare( $sql );
+                        } catch( PDOException $e ) {
+                            echo '<p>Hubo un problema al intentar cargar los correos.</p>';
+                        }
+
+                    ?>
+                    <tbody>
                         <!-- Ejemplo de mensaje NO leído -->
                         <tr>
                             <td>María López</td>
