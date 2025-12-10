@@ -1,3 +1,13 @@
+<?php  
+
+    include_once __DIR__ . '/config/Connection.php';
+
+    $conn = connection();
+
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -41,6 +51,7 @@
 
                         try{
                             $stmt = $conn -> prepare( $sql );
+                            $stmt -> execute();
                         } catch( PDOException $e ) {
                             echo '<p>Hubo un problema al intentar cargar los correos.</p>';
                         }
@@ -48,11 +59,12 @@
                     ?>
                     <tbody>
                         <!-- Ejemplo de mensaje NO leído -->
+                        <?php while ( $res = $stmt -> fetch() ): ?>
                         <tr>
-                            <td>María López</td>
-                            <td>maria@example.com</td>
-                            <td>Problema con registro</td>
-                            <td>2025-11-15</td>
+                            <td><?php echo $res['nombre'] ?></td>
+                            <td><?php echo $res['email'] ?></td>
+                            <td><?php echo $res['asunto'] ?></td>
+                            <td><?php echo $res['fecha'] ?></td>
                             <td><span class="badge badge-nuevo">Nuevo</span></td>
                             <td>
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalMensaje1">
@@ -91,7 +103,7 @@
                                 </div>
                             </div>
                         </div>
-
+                        <?php endwhile; ?>
                         <!-- Ejemplo de mensaje LEÍDO -->
                         <tr>
                             <td>Carlos Peña</td>

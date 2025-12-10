@@ -1,7 +1,7 @@
 <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-green sticky-top shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold text-light fs-1 logo-stroked" href="index.php">CONACICA</a>
+      <a class="navbar-brand fw-bold text-light fs-1 logo-stroked logoConacica" href="index.php">CONACICA</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>

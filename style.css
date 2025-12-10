@@ -1,5 +1,15 @@
 
+/* Font conacia */
 
+@font-face {
+  font-family: 'Ethnocentric';
+  src: url('./src/fonts/Ethnocentric-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+.logoConacica{
+  font-family: 'Ethnocentric', sans-serif;
+}
 /* Estilos para cards BENEFICIOS y PILARES CONACICA*/
 
 /* Estilos iniciales para la transición */

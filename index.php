@@ -24,6 +24,7 @@
   
   <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="font" href="./src/fonts/Ethnocentric-Regular.otf">
 
   <!-- Estilos personalizados -->
   <link rel="stylesheet" href="style.css">

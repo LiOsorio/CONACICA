@@ -1,3 +1,11 @@
+
+<?php 
+
+    include_once __DIR__ . '/config/Connection.php';
+
+    $conn = connection();
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -68,25 +76,37 @@
                         <th scope="col" class="text-end">Precio Promedio</th>
                     </tr>
                 </thead>
+                <?php 
+                
+                $sql = 'SELECT 
+                                    reg.preciosId,
+                                    reg.unidad,
+                                    reg.precio,
+                                    pro.productName,
+                                    cen.centralName
+                                    FROM preciosRegistrados reg
+                                    INNER JOIN producto pro
+                                    ON reg.productoId = pro.productoId
+                                    INNER JOIN central cen
+                                    ON reg.centralId = cen.centralId
+                                ';
+
+                try{
+                    $stmt = $conn -> prepare( $sql );
+                    $stmt -> execute();
+                } catch( PDOException $e ) {
+                    echo "<p>Hubo un error al consultar los datos.</p>";
+                }
+                ?>
                 <tbody>
+                    <?php while( $res = $stmt -> fetch() ): ?>
                     <tr>
-                        <td class="fw-bold">Aguacate Hass</td>
-                        <td>CEDA Iztapalapa</td>
-                        <td>Kilogramo</td>
-                        <td class="text-end fw-bold fs-5 text-dark">$65.50</td> 
+                        <td class="fw-bold"><?php echo $res['productName'] ?></td>
+                        <td><?php echo $res['centralName'] ?></td>
+                        <td><?php echo $res['unidad'] ?></td>
+                        <td class="text-end fw-bold fs-5 text-dark">$<?php echo $res['precio'] ?></td> 
                     </tr>
-                    <tr>
-                        <td class="fw-bold">Limón Persa</td>
-                        <td>CEDA Iztapalapa</td>
-                        <td>Kilogramo</td>
-                        <td class="text-end fw-bold fs-5 text-dark">$18.90</td>
-                    </tr>
-                     <tr>
-                        <td class="fw-bold">Tomate Saladet</td>
-                        <td>Central de Abasto Guadalajara</td>
-                        <td>Kilogramo</td>
-                        <td class="text-end fw-bold fs-5 text-dark">$310.00</td>
-                    </tr>
+                    <?php endwhile; ?>
                     </tbody>
             </table>
         </div>
