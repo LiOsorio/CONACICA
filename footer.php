@@ -30,7 +30,7 @@
         <div class="col-md-3 mb-4">
           <h5 class="fw-bold text-dark">Contacto</h5>
           <ul class="list-unstyled small">
-            <li><i class="fas fa-map-marker-alt me-2"></i> Dirección de Oficinas Centrales</li>
+            <li><i class="fas fa-map-marker-alt me-2"></i><a style="text-decoration: none; color: #FFF;" href="https://maps.app.goo.gl/j2nVsEmXfHLFh8G49" target="_blank"> Central de Abasto Ecatepec Nave C Bodega S05,<br> Estado de México, Mexico</a></li>
             <li><i class="fas fa-phone me-2"></i> +52 55 XXXX XXXX</li>
             <li><i class="fas fa-envelope me-2"></i> info@conacica.org</li>
           </ul>
@@ -57,9 +57,9 @@
 
         <div class="col-md-3 mb-4 text-md-end">
           <h5 class="fw-bold text-dark">Síguenos</h5>
-          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f fa-2x"></i></a>
-          <a href="#" class="text-white me-3"><i class="fab fa-x fa-2x"></i></a>
-          <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-2x"></i></a>
+          <a href="https://www.facebook.com/share/16ron1q4wR/" target="_blank" class="text-white me-3"><i class="fab fa-facebook-f fa-2x"></i></a>
+          <!-- <a href="#" class="text-white me-3"><i class="fab fa-x fa-2x"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in fa-2x"></i></a> -->
           <p class="mt-3 small">&copy; 2025 CONACICA. Todos los derechos reservados.</p>
         </div>
       </div>
