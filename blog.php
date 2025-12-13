@@ -183,45 +183,47 @@
   </div>
 
         <div class="row g-4 my-4">
-            <!-- Card 1 -->
+            <?php 
+              $sql = "SELECT * FROM avisos WHERE estado = 'aprovado' ORDER BY fecha DESC LIMIT 3";
+              try{
+                $stmt = $conn -> prepare( $sql );
+                $stmt -> execute();
+              } catch( PDOException $e ) {
+                echo '<p>Hubo un problema al cargar los datos</p>';
+              }
+              while( $res = $stmt -> fetch() ):
+            ?>
             <div class="col-md-4">
                 <div class="card shadow-sm h-100">
                     <div class="card-body">
-                        <span class="badge bg-warning text-dark mb-2">Bloqueo</span>
-                        <h5 class="card-title fw-bold">Bloqueo en carretera 190</h5>
-                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Chiapas</p>
-                        <p class="text-muted"><i class="bi bi-calendar"></i> 18 Nov 2025</p>
-                        <p class="card-text">Transportistas bloquean la carretera. Evitar zona de 9 AM a 4 PM.</p>
+                      <?php
+                      $colores = [
+                        'Bloqueo'     => '#DC3545',
+                        'Agricultura' => '#28A745',
+                        'Mercado'     => '#007BFF',
+                        'Logística'   => '#FFC107',
+                        'Clima'       => '#17A2B8',
+                        'General'     => '#6F42C1'
+                        ];
+                        
+                        $color = $colores[$res['tipo']] ?? '#6c757d';
+                      ?>
+                      
+
+                        <span
+                          class="badge mb-2"
+                          style="background-color: <?php echo $color ?>; color: #fff;"
+                        >
+                          <?php echo htmlspecialchars($res['tipo']) ?>
+                        </span>
+                        <h5 class="card-title fw-bold"><?= $res['titulo'] ?></h5>
+                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> <?= $res['lugar'] ?></p>
+                        <p class="text-muted"><i class="bi bi-calendar"></i> <?= $res['fecha'] ?></p>
+                        <p class="card-text"><?= $res['aviso'] ?></p>
                     </div>
                 </div>
             </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <span class="badge bg-primary mb-2">Agricultura</span>
-                        <h5 class="card-title fw-bold">Manifestación agrícola</h5>
-                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Veracruz</p>
-                        <p class="text-muted"><i class="bi bi-calendar"></i> 14 Nov 2025</p>
-                        <p class="card-text">Productores se reunirán en el Zócalo para exigir apoyo federal.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <span class="badge bg-success mb-2">Mercado</span>
-                        <h5 class="card-title fw-bold">Variación de precios</h5>
-                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Jalisco</p>
-                        <p class="text-muted"><i class="bi bi-calendar"></i> 12 Nov 2025</p>
-                        <p class="card-text">Aumento del 8% en chile serrano por baja oferta en centros de abasto.</p>
-                    </div>
-                </div>
-            </div>
-
+            <?php endwhile; ?>
         </div>
     </div>
 
@@ -374,21 +376,19 @@ Desde CONACICA, reconocemos y apoyamos todas las iniciativas que contribuyen al 
             </div>
 
       <div class="modal-body">
-        <form class="shadow-sm p-4 bg-white rounded">
-
+        <form action="./dashboardCrud/blogPub.php" method='post' class="shadow-sm p-4 bg-white rounded">
           <div class="row g-3">
-
             <!-- Tipo de aviso -->
             <div class="col-md-6">
               <label class="form-label">Tipo de aviso</label>
-              <select class="form-select" name="id_tipo" required>
-                <option value="">Selecciona una categoría</option>
-                <option value="1" data-color="#DC3545">Bloqueo</option>
-                <option value="2" data-color="#28A745">Agricultura</option>
-                <option value="3" data-color="#007BFF">Mercado</option>
-                <option value="4" data-color="#FFC107">Logística</option>
-                <option value="5" data-color="#17A2B8">Clima</option>
-                <option value="6" data-color="#6F42C1">General</option>
+              <select class="form-select" name="tipo" required>
+                <option value="" selected disabled>Selecciona una categoría</option>
+                <option value="Bloqueo" data-color="#DC3545">Bloqueo</option>
+                <option value="Agricultura" data-color="#28A745">Agricultura</option>
+                <option value="Mercado" data-color="#007BFF">Mercado</option>
+                <option value="Logística" data-color="#FFC107">Logística</option>
+                <option value="Clima" data-color="#17A2B8">Clima</option>
+                <option value="General" data-color="#6F42C1">General</option>
               </select>
             </div>
 
@@ -418,14 +418,14 @@ Desde CONACICA, reconocemos y apoyamos todas las iniciativas que contribuyen al 
             </div>
 
             <!-- Imagen -->
-            <div class="col-12">
+            <!-- <div class="col-12">
               <label class="form-label">Imagen (opcional)</label>
               <input type="file" class="form-control" name="imagen" accept="image/*">
-            </div>
+            </div> -->
 
             <!-- Botón -->
             <div class="col-12 text-end mt-3">
-              <button type="submit" class="btn btn-outline-conacica-green rounded-pill px-4">
+              <button type="submit" name="action" value="avisoPub" class="btn btn-outline-conacica-green rounded-pill px-4">
                 Enviar aviso
               </button>
             </div>

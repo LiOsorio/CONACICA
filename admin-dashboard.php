@@ -1,3 +1,33 @@
+<?php  
+    session_start();
+    include_once __DIR__ . '/config/Connection.php';
+
+    $conn = connection();
+    $error = '';
+
+    if( !isset( $_SESSION['userId'] ) || empty( $_SESSION['userId'] ) ){
+        header( "Location: /" );
+        exit;
+    } else {
+        $userId = $_SESSION['userId'];
+    }
+    
+    $sql = "SELECT * FROM users WHERE id = :userId ";
+    
+    $stmt = $conn -> prepare($sql);
+    $stmt -> execute( [ 'userId' => $userId ] );
+    $res = $stmt -> fetch();
+    
+    if( !$res ){
+        header( "location: /" );
+        exit;
+    }
+    if( isset( $_SESSION['error'] ) || !empty( $_SESSION['error'] ) ){
+        $error = $_SESSION['error'];
+        unset($_SESSION['error']);
+    }
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>

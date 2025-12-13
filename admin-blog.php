@@ -1,13 +1,30 @@
-<?php 
+<?php  
     session_start();
-
-    include_once "./config/Connection.php";
+    include_once __DIR__ . '/config/Connection.php';
 
     $conn = connection();
-    $error ='';
+    $error = '';
+
+    if( !isset( $_SESSION['userId'] ) || empty( $_SESSION['userId'] ) ){
+        header( "Location: /" );
+        exit;
+    } else {
+        $userId = $_SESSION['userId'];
+    }
     
-    if(!empty($_SESSION['error'])){
+    $sql = "SELECT * FROM users WHERE id = :userId ";
+    
+    $stmt = $conn -> prepare($sql);
+    $stmt -> execute( [ 'userId' => $userId ] );
+    $res = $stmt -> fetch();
+    
+    if( !$res ){
+        header( "location: /" );
+        exit;
+    }
+    if( isset( $_SESSION['error'] ) || !empty( $_SESSION['error'] ) ){
         $error = $_SESSION['error'];
+        unset($_SESSION['error']);
     }
 
 ?>
@@ -118,7 +135,7 @@
       
       <!-- Columna izquierda: IMAGEN -->
       <div class="col-md-6 mb-4 mb-md-0">
-        <img src="img/fresa.jpg" class="img-fluid rounded" alt="Noticia completa">
+        <img src="./img/fresa.jpg" class="img-fluid rounded" alt="Noticia completa">
       </div>
 
       <!-- Columna derecha: TEXTO -->
@@ -132,116 +149,100 @@
   <div class="card p-4 mb-5">
     <div class="d-flex justify-content-between align-items-center">
       <h4 class="fw-bold mb-0">Imagen principal del blog</h4>
-      <button class="btn btn-warning btn-sm">
+      <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#modalBlog">
         <i class="bi bi-image"></i> Cambiar imagen
       </button>
     </div>
   </div>
   </div>
 </section>
-
-<section class="container">
-  
-    <div class="card mt-0 p-3 shadow-sm border-0 rounded-4 bg-light">
-
-      <div class="">
-          <h3 class="fw-bold mb-2 fs-3">¿Tienes una noticia o aviso del sector?</h3>
-
-        <div class="d-flex">
-          <p class="mb-3 fs-5">
-            Comparte información relevante y contribuye a mantener actualizada a toda la comunidad CONACICA.
-          </p>
-
-          <div class="text-center mx-3">
-            <button 
-              class="btn btn-conacica-cta rounded-pill px-4 py-2 fw-semibold"
-              data-bs-toggle="modal"
-              data-bs-target="#modalAviso">
-              Enviar aviso
-            </button>
+<div class="modal fade" id="modalBlog" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalBlog" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3">
+              <form action="./dashboardCrud/editBlog.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="participaciones" name="action" hidden >
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar Imágen de Noticias </h5>
+                    <p class="fw-bold text-center " style="color: #ec4141ff;">Una vez aceptados los cambios, la imágen anterior se eliminará.</p>
+                </div>
+                <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
+                  <div class="col-6 d-flex justify-content-center flex-column mx-auto">
+                    <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/fresa.jpg" alt="Imagen blog">
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="imgAvisos" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
+                    <input type="file" id="imgBlog" name="imgAvisos" accept="image/jpeg, image/png, image/webp" placeholder="Ingresa la imagen a mostrar">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 m-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" >Cambiar Imágen</button>
+                </div>
+              </form>
           </div>
-
-        </div>
       </div>
+  </div>
 
 
-    </div>
-</section>
 
 
     <div class="my-2">
 
     <div class="container my-4">
-        <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-4">Avisos de la Comunidad CONACICA</h3>
-
-        <div class="row align-items-start">
-      
-      <!-- Columna izquierda: IMAGEN -->
-      <div class="col-md-6 mb-4 mb-md-0">
-        <img src="img/eventos-2.jpg" class="img-fluid rounded" alt="Noticia completa">
-      </div>
-
-      <!-- Columna derecha: TEXTO -->
-      <div class="col-md-6">
-        <h2 class="fw-bold m-3 fs-3">Contenido comunitario: aquí verás avisos enviados por usuarios del sector.</h2>
-        <p class="lead text-semibold m-3 fs-5 justificar">
-        Nuestro objetivo es mantenerte al día con lo que sucede en el ecosistema agroalimentario y ofrecer un espacio donde la comunidad pueda informarse y participar.          
-
-    </div>
-
-    <!-- SECCIÓN AVISOS COMUNIDAD -->
-  <div class="card p-4 mb-5">
-    <div class="d-flex justify-content-between align-items-center">
-      <h4 class="fw-bold mb-0">Imagen avisos comunitarios</h4>
-      <button class="btn btn-warning btn-sm">
-        <i class="bi bi-image"></i> Cambiar imagen
-      </button>
-    </div>
-  </div>
-  </div>
-
-        <div class="row g-4 my-4">
-            <!-- Card 1 -->
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <span class="badge bg-warning text-dark mb-2">Bloqueo</span>
-                        <h5 class="card-title fw-bold">Bloqueo en carretera 190</h5>
-                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Chiapas</p>
-                        <p class="text-muted"><i class="bi bi-calendar"></i> 18 Nov 2025</p>
-                        <p class="card-text">Transportistas bloquean la carretera. Evitar zona de 9 AM a 4 PM.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <span class="badge bg-primary mb-2">Agricultura</span>
-                        <h5 class="card-title fw-bold">Manifestación agrícola</h5>
-                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Veracruz</p>
-                        <p class="text-muted"><i class="bi bi-calendar"></i> 14 Nov 2025</p>
-                        <p class="card-text">Productores se reunirán en el Zócalo para exigir apoyo federal.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="col-md-4">
-                <div class="card shadow-sm h-100">
-                    <div class="card-body">
-                        <span class="badge bg-success mb-2">Mercado</span>
-                        <h5 class="card-title fw-bold">Variación de precios</h5>
-                        <p class="text-muted mb-1"><i class="bi bi-geo-alt"></i> Jalisco</p>
-                        <p class="text-muted"><i class="bi bi-calendar"></i> 12 Nov 2025</p>
-                        <p class="card-text">Aumento del 8% en chile serrano por baja oferta en centros de abasto.</p>
-                    </div>
-                </div>
-            </div>
-
+      <h3 class="fw-bold border-start text-start border-conacica-green border-5 ps-3 mb-4">Avisos de la Comunidad CONACICA</h3>
+      <div class="row align-items-start">
+        <!-- Columna izquierda: IMAGEN -->
+        <div class="col-md-6 mb-4 mb-md-0">
+          <img src="./img/eventos-2.jpg" class="img-fluid rounded" alt="Noticia completa">
         </div>
+
+        <!-- Columna derecha: TEXTO -->
+        <div class="col-md-6">
+          <h2 class="fw-bold m-3 fs-3">Contenido comunitario: aquí verás avisos enviados por usuarios del sector.</h2>
+          <p class="lead text-semibold m-3 fs-5 justificar">
+          Nuestro objetivo es mantenerte al día con lo que sucede en el ecosistema agroalimentario y ofrecer un espacio donde la comunidad pueda informarse y participar.          
+        </div>
+    <!-- SECCIÓN AVISOS COMUNIDAD -->
+        <div class="card p-4 mb-5">
+          <div class="d-flex justify-content-between align-items-center">
+            <h4 class="fw-bold mb-0">Imagen avisos comunitarios</h4>
+            <button class="btn btn-warning rounded-pill" data-bs-toggle="modal" data-bs-target="#modalImgAvisos">
+              <i class="bi bi-image"></i> Cambiar imagen
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="modal fade" id="modalImgAvisos" data-bs-backdrop="static" data-bs-keyboard="true" tabindex="-1" aria-labelledby="modalParticipaciones" aria-hidden="true">
+      <div class="modal-dialog modal-xl modal-centered">
+          <div class="modal-content border-0 shadow login-modal m-3">
+              <form action="./dashboardCrud/editBlog.php" method="POST" enctype="multipart/form-data">
+                <input type="text" value="participaciones" name="action" hidden >
+                <div class="text-center mb-3">
+                    <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
+                    <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar Imágen de Avisos Comunitarios</h5>
+                    <p class="fw-bold text-center " style="color: #ec4141ff;">Una vez aceptados los cambios, la imágen anterior se eliminará.</p>
+                </div>
+                <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
+                  <div class="col-6 d-flex justify-content-center flex-column mx-auto">
+                    <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/eventos-2.jpg" alt="Imagen avisos">
+                  </div>
+                  <div class="col-4 d-flex flex-column justify-content-center mx-auto">
+                    <label for="imgAvisos" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
+                    <input type="file" id="imgAvisos" name="imgAvisos" accept="image/jpeg, image/png, image/webp" placeholder="Ingresa la imagen a mostrar">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-end gap-2 m-3">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-warning" >Cambiar Imágen</button>
+                </div>
+              </form>
+          </div>
+      </div>
+  </div>
 
     <section class="container my-4">
 

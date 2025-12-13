@@ -2,6 +2,9 @@
 session_start();
 include_once __DIR__ . '/../config/Connection.php';
 
+$conn = connection();
+$error;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -21,8 +24,7 @@ $mail -> SMTPSecure = 'tls';
 $mail -> Port = 587;
 $mail -> setFrom('desemptesci@gmail.com');
 
-$conn = connection();
-$error;
+
 
 $mailRegex = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/';
 
@@ -68,15 +70,50 @@ $mailRegex = '/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/';
                 $mail -> addAddress( $email );
                 $mail -> Subject = $asunto;
                 $mail -> isHTML(true);
-                $mailContent = '<h1>Gracias por contactar a CONACICA!</h1>
-                <p>Hemos recibido tu coreo, pronto recibirás una respuesta de nuestros administradores!</p>
-                <h2>Datos del correo enviado</h2>
-                <h3>Asunto:</h3>
-                <p>'.$asunto.'</p>
-                <h3>Mensaje</h3>
-                <p>'.$mensaje.'</p>
+                $mailContent = '
+                    <div style="font-family: Arial, sans-serif; color:#333; line-height:1.6;">
+                        <h1 style="color:#1f2937;">Gracias por contactarnos</h1>
+
+                        <p>
+                            Hemos recibido tu mensaje correctamente. 
+                            Nuestro equipo de <strong>CONACICA</strong> lo revisará y 
+                            te responderá a la brevedad posible.
+                        </p>
+
+                        <p>
+                            Agradecemos el tiempo que te tomaste para escribirnos.
+                            A continuación, te compartimos los datos del mensaje enviado:
+                        </p>
+
+                        <hr style="border:none; border-top:1px solid #ddd; margin:20px 0;">
+
+                        <h3 style="margin-bottom:5px;">Asunto</h3>
+                        <p style="background:#f9fafb; padding:10px; border-radius:5px;">
+                            '.$asunto.'
+                        </p>
+
+                        <h3 style="margin-bottom:5px;">Mensaje</h3>
+                        <p style="background:#f9fafb; padding:10px; border-radius:5px;">
+                            '.nl2br(htmlspecialchars($mensaje)).'
+                        </p>
+
+                        <hr style="border:none; border-top:1px solid #ddd; margin:20px 0;">
+
+                        <p style="font-size:14px; color:#555;">
+                            Este correo es una confirmación automática. 
+                            Si necesitas agregar información adicional, 
+                            puedes responder directamente a este mensaje.
+                        </p>
+
+                        <p style="margin-top:30px;">
+                            Saludos cordiales,<br>
+                            <strong>Equipo CONACICA</strong>
+                        </p>
+                    </div>
                 ';
-                $mail -> Body = $mailContent;
+
+                $mail->Body = $mailContent;
+
                 $mail ->send();
                 header( 'Location: /' );
                 exit;

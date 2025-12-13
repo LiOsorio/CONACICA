@@ -1,6 +1,4 @@
 
-/* Font conacia */
-
 @font-face {
   font-family: 'Ethnocentric';
   src: url('./../fonts/Ethnocentric-Regular.otf') format('opentype');
@@ -22,7 +20,7 @@
 .card-hover-effect:hover {
   background-color: #eef2ea;
   
-  border: 1px solid rgba(0, 0, 0, 0.3); 
+  border: 1px solid rgba(0, 0, 0, 0.4); 
   
   transform: scale(1.02); 
   
@@ -36,6 +34,28 @@
   height: 220px;
   object-fit: cover;
 }
+
+/* En la seccion del blog para la card para abrir modal de agregar noticia*/
+
+.btn-conacica-cta {
+  background-color: #3b8c2a;
+  color: white;
+  border: none;
+  transition: all .2s ease-in-out;
+}
+
+.btn-conacica-cta:hover {
+  background-color: #327824;
+  transform: translateY(-2px);
+}
+
+
+.card.bg-light {
+  background: #f7f9fb !important;
+}
+
+
+
 
 /* PARA HACER RESPONSIVE LAS CARDS*/
 
@@ -889,26 +909,6 @@
 }
 
 
-        /* ASIDE */
-.filtro-aside {
-  position: sticky;
-  top: 120px;  /* <-- separa del top para que no tape tu navbar */
-  float: right;
-  width: 260px;
-  padding: 10px;
-}
-
-.filtro-aside .btn-group-vertical .btn {
-  margin-bottom: 10px;
-  border-radius: 5px !important;
-  width: 100%;
-}
-
-.filtro-aside {
-  position: sticky;
-  top: 120px; /* ajusta según la altura de tu navbar */
-}
-
 /* MODAL BLOG */
 
 #modalAviso .modal-content {
@@ -922,13 +922,7 @@
 #modalAviso .modal-footer {
   border-top: none;
 }
-/* imagen blog */
-.img-detalle-noticia {
-  width: 100%;
-  height: 80vh;          /* Puedes subir a 90vh si quieres que sea casi pantalla completa */
-  object-fit: cover;     /* Mantiene proporciones y llena sin deformarse */
-  border-radius: 15px;   /* Bordes redondeados como pediste */
-}
+
 
 
 /* css para menu de admin*/
@@ -1020,6 +1014,7 @@
     text-transform: uppercase; /* MAYÚSCULAS para énfasis */
     margin-bottom: 0.5rem; /* Espacio debajo del título */
 }
+
 
 /* animaciones de index */
 

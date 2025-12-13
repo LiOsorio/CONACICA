@@ -29,7 +29,7 @@ CREATE TABLE `alianzas` (
   `nombre` varchar(150) NOT NULL,
   `active` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -49,6 +49,41 @@ UNLOCK TABLES;
 commit;
 
 --
+-- Table structure for table `avisos`
+--
+
+DROP TABLE IF EXISTS `avisos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8mb4 */;
+CREATE TABLE `avisos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `titulo` varchar(100) NOT NULL,
+  `lugar` varchar(130) DEFAULT NULL,
+  `fecha` date DEFAULT NULL,
+  `tipo` enum('Bloqueo','Mercado','Agricultura','Clima','Logística','General') DEFAULT 'General',
+  `estado` enum('aprovado','proceso','rechazado') DEFAULT 'proceso',
+  `aviso` varchar(300) DEFAULT NULL,
+  `evidencia` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `avisos`
+--
+
+LOCK TABLES `avisos` WRITE;
+/*!40000 ALTER TABLE `avisos` DISABLE KEYS */;
+set autocommit=0;
+INSERT INTO `avisos` VALUES
+(2,'Bloqueo en carretera 190','Chiapas','2025-11-18','Bloqueo','aprovado','Transportistas bloquean la carretera. Evitar zona de 9 AM a 4 PM.',NULL),
+(3,'Manifestación agrícola','Veracruz','2025-11-28','Agricultura','aprovado','Productores se reunirán en el Zócalo para exigir apoyo federal.',NULL),
+(4,'Variación de precios','Jalisco','2025-12-12','Mercado','proceso','Aumento del 8% en chile serrano por baja oferta en centros de abasto.',NULL);
+/*!40000 ALTER TABLE `avisos` ENABLE KEYS */;
+UNLOCK TABLES;
+commit;
+
+--
 -- Table structure for table `central`
 --
 
@@ -59,7 +94,7 @@ CREATE TABLE `central` (
   `centralId` int(11) NOT NULL AUTO_INCREMENT,
   `centralName` varchar(150) DEFAULT NULL,
   PRIMARY KEY (`centralId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +105,9 @@ LOCK TABLES `central` WRITE;
 /*!40000 ALTER TABLE `central` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `central` VALUES
-(1,'CEDA Iztapalapa');
+(1,'CEDA Iztapalapa'),
+(2,'CEDA Ecatepec'),
+(3,'Izcalli');
 /*!40000 ALTER TABLE `central` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -91,7 +128,7 @@ CREATE TABLE `correos` (
   `fecha` date NOT NULL,
   `estado` enum('Nuevo','Visto') DEFAULT 'Nuevo',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -102,9 +139,7 @@ LOCK TABLES `correos` WRITE;
 /*!40000 ALTER TABLE `correos` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `correos` VALUES
-(1,'Gerardo Oswaldo Galicia Flores','o.galicia.0812@gmail.com','Pruebas de php mailer','Espero que funcione!','2025-12-08','Nuevo'),
-(2,'Gerardo Oswaldo Galicia Flores','o.galicia.0812@gmail.com','Pruebas de php mailer','Espero que si se madne bien bien ahora si jaja','2025-12-08','Nuevo'),
-(3,'Gerardo Oswaldo Galicia Flores','o.galicia.0812@gmail.com','Pruebas de php mailer','Ahora siii funciona porfaaa','2025-12-08','Nuevo');
+(5,'Gerarrdo Oswaldo Galicia Flores','o.galicia.0812@gmail.com','Pruebas de correo','Mensaje que tiene caracteres especiales\r\n\r\njeje./*-+!\"#$%&/()=?¡','2025-12-13','Nuevo');
 /*!40000 ALTER TABLE `correos` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -162,7 +197,7 @@ CREATE TABLE `preciosRegistrados` (
   KEY `centralId` (`centralId`),
   CONSTRAINT `1` FOREIGN KEY (`productoId`) REFERENCES `producto` (`productoId`),
   CONSTRAINT `2` FOREIGN KEY (`centralId`) REFERENCES `central` (`centralId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -173,7 +208,10 @@ LOCK TABLES `preciosRegistrados` WRITE;
 /*!40000 ALTER TABLE `preciosRegistrados` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `preciosRegistrados` VALUES
-(1,1,1,'Menudeo',20.00,'2025-12-07');
+(1,1,1,'Menudeo',20.00,'2025-12-07'),
+(3,2,2,'Medio Mayoreo',210.00,'2025-12-12'),
+(5,5,2,'Mayoreo',35.00,'2025-12-12'),
+(6,6,3,'Menudeo',18.50,'2025-12-13');
 /*!40000 ALTER TABLE `preciosRegistrados` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -189,7 +227,7 @@ CREATE TABLE `producto` (
   `productoId` int(11) NOT NULL AUTO_INCREMENT,
   `productName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`productoId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,7 +239,9 @@ LOCK TABLES `producto` WRITE;
 set autocommit=0;
 INSERT INTO `producto` VALUES
 (1,'Aguacate Hass'),
-(2,'Jitomate Rojo');
+(2,'Jitomate Rojo'),
+(5,'Manzana Roja'),
+(6,'Pepino');
 /*!40000 ALTER TABLE `producto` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -233,7 +273,8 @@ LOCK TABLES `promocional` WRITE;
 set autocommit=0;
 INSERT INTO `promocional` VALUES
 ('1','Sabor autentico con productos 100% mexicanos',' En nuestro restaurante, la autenticidad es la base. Utilizamos ingredientes 100% mexicanos, frescos y de origen local, para recrear los sabores tradicionales que cuentan la historia de nuestro país.\nConozca nuestra cocina, un punto de encuentro entre la tradición y el sabor más puro.','#','promocional.webp',0),
-('692c06ad9c6cd0.60128531','Sabor autentico con productos 100% mexicanos',' En nuestro restaurante, la autenticidad es la base. Utilizamos ingredientes 100% mexicanos, frescos y de origen local, para recrear los sabores tradicionales que cuentan la historia de nuestro país. Conozca nuestra cocina, un punto de encuentro entre la tradición y el sabor más puro. ','#','promocional.webp',1);
+('692c06ad9c6cd0.60128531','Sabor autentico con productos 100% mexicanos',' En nuestro restaurante, la autenticidad es la base. Utilizamos ingredientes 100% mexicanos, frescos y de origen local, para recrear los sabores tradicionales que cuentan la historia de nuestro país. Conozca nuestra cocina, un punto de encuentro entre la tradición y el sabor más puro. ','#','promocional.webp',0),
+('693ce132f41015.01366260','Sabor autentico con productos 100% mexicanos','En nuestro restaurante, la autenticidad es la base. Utilizamos ingredientes 100% mexicanos, frescos y de origen local, para recrear los sabores tradicionales que cuentan la historia de nuestro país. Conozca nuestra cocina, un punto de encuentro entre la tradición y el sabor más puro. ','https://www.facebook.com/RestauranteLaVinaDeSanPedro/','promocional.webp',1);
 /*!40000 ALTER TABLE `promocional` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -282,4 +323,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2025-12-08  2:10:55
+-- Dump completed on 2025-12-13  4:31:27

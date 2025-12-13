@@ -5,6 +5,25 @@
 
     $error;
     $conn = connection();
+
+    if( !isset( $_SESSION['userId'] ) || empty( $_SESSION['userId'] ) ){
+        header( "Location: /" );
+        exit;
+    } else {
+        $userId = $_SESSION['userId'];
+    }
+    
+    $sql = "SELECT * FROM users WHERE id = :userId ";
+    
+    $stmt = $conn -> prepare($sql);
+    $stmt -> execute( [ 'userId' => $userId ] );
+    $res = $stmt -> fetch();
+    
+    if( !$res ){
+        header( "location: /" );
+        exit;
+    }
+
     $sqlCentral = 'SELECT * FROM central';
     $sqlProducto = 'SELECT * FROM  producto';
     $input = json_decode(file_get_contents("php://input"), true);
@@ -14,6 +33,16 @@
     if( isset( $_SESSION['error'] ) || !empty( $_SESSION['error'] ) ){
         $error = $_SESSION['error'];
         unset($_SESSION['error']);
+    }
+
+?>
+<?php  
+
+
+
+
+    if(!empty($_SESSION['error'])){
+        $error = $_SESSION['error'];
     }
 
 ?>
@@ -286,6 +315,10 @@
     </div>
     <script src="./src/js/bootstrap.bundle.js"></script>
     <script>
+
+        function preventDefault( ){
+            preventDefault();
+        }
         document.addEventListener( 'DOMContentLoaded' , function() {
             fetch( './dashboardCrud/gestionPreciosAjax.php', {
                 method: 'POST',

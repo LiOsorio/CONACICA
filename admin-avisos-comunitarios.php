@@ -1,12 +1,31 @@
-<?php 
+<?php  
     session_start();
-
-    include_once "./config/Connection.php";
+    include_once __DIR__ . '/config/Connection.php';
 
     $conn = connection();
-    $error ='';
-    
+    $error = '';
 
+    if( !isset( $_SESSION['userId'] ) || empty( $_SESSION['userId'] ) ){
+        header( "Location: /" );
+        exit;
+    } else {
+        $userId = $_SESSION['userId'];
+    }
+    
+    $sql = "SELECT * FROM users WHERE id = :userId ";
+    
+    $stmt = $conn -> prepare($sql);
+    $stmt -> execute( [ 'userId' => $userId ] );
+    $res = $stmt -> fetch();
+    
+    if( !$res ){
+        header( "location: /" );
+        exit;
+    }
+    if( isset( $_SESSION['error'] ) || !empty( $_SESSION['error'] ) ){
+        $error = $_SESSION['error'];
+        unset($_SESSION['error']);
+    }
 
 ?>
 <!DOCTYPE html>
@@ -28,7 +47,11 @@
 <div class="container py-4">
 
   <h2 class="m-2">Avisos Comunitarios</h2>
-
+  <?php if( !empty( $error ) ): ?>
+      <div class="p-3 bg-light rounded border mb-4 mx-auto">
+          <p class="text-danger text-center"><?php echo $error ?></p>
+      </div>
+  <?php endif; ?>
   <ul class="nav nav-tabs mb-4" id="avisosTabs">
     <li class="nav-item">
       <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#recibidos">Recibidos</button>
@@ -61,46 +84,40 @@
                 </tr>
               </thead>
               <tbody>
+              <?php 
+                $sql = "SELECT * FROM avisos WHERE estado = 'proceso'";
 
-                <!-- FILA CLICKEABLE -->
-                <tr class="ver-aviso"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalDetalleAviso"
-                    data-etiqueta="Bloqueo"
-                    data-color="#DC3545"
-                    data-titulo="Bloqueo por transportistas en carretera libre"
-                    data-lugar="Carretera México–Toluca"
-                    data-fecha="2025-11-11"
-                    data-descripcion="Transportistas realizan un bloqueo parcial en ambos sentidos como medida de protesta. Se recomienda tomar rutas alternas y mantenerse informado.">
+                try{
+                  $stmt = $conn -> prepare( $sql );
+                  $stmt -> execute();
+                }catch( PDOException $e ) {
+                  echo '<p>Hubo un error al consultar la base de datos</p>';
+                }
 
-                  <td>Ana Ramírez</td>
-                  <td>Bloqueo por transportistas en carretera libre</td>
-                  <td>2025-11-11</td>
-                  <td>
-                    <button class="btn btn-success btn-sm me-1">Aprobar</button>
-                    <button class="btn btn-danger btn-sm">Rechazar</button>
-                  </td>
-                </tr>
+                while( $res = $stmt -> fetch()):
+              ?>
+                  <tr class="ver-aviso"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalDetalleAviso"
+                      data-etiqueta="Mercado"
+                      data-color="#007BFF"
+                      data-titulo="Apertura de mercado regional"
+                      data-lugar="Toluca, Estado de México"
+                      data-fecha="2025-11-10"
+                      data-descripcion="Productores locales informan sobre la apertura de un nuevo mercado regional con apoyo comunitario.">
 
-                <tr class="ver-aviso"
-                    data-bs-toggle="modal"
-                    data-bs-target="#modalDetalleAviso"
-                    data-etiqueta="Mercado"
-                    data-color="#007BFF"
-                    data-titulo="Apertura de mercado regional"
-                    data-lugar="Toluca, Estado de México"
-                    data-fecha="2025-11-10"
-                    data-descripcion="Productores locales informan sobre la apertura de un nuevo mercado regional con apoyo comunitario.">
-
-                  <td>Juan Pérez</td>
-                  <td>Apertura de mercado regional</td>
-                  <td>2025-11-10</td>
-                  <td>
-                    <button class="btn btn-success btn-sm me-1">Aprobar</button>
-                    <button class="btn btn-danger btn-sm">Rechazar</button>
-                  </td>
-                </tr>
-
+                    <td><?= $res['lugar']  ?></td>
+                    <td><?= $res['titulo'] ?></td>
+                    <td><?= $res['fecha'] ?></td>
+                    <td>
+                      <form action="./dashboardCrud/editBlog.php" method="post">
+                        <input type="text " name="id" value="<?= $res['id'] ?>" hidden>
+                        <button name="action" value="aprovar" type="submit" class="btn btn-success btn-sm me-1">Aprobar</button>
+                        <button name="action" value="rechazar" type="submit" class="btn btn-danger btn-sm">Rechazar</button>
+                      </form>
+                    </td>
+                  </tr>
+                <?php endwhile;?>
               </tbody>
             </table>
           </div>
@@ -128,13 +145,31 @@
                 </tr>
               </thead>
               <tbody>
+                <?php 
+                $sql = "SELECT * FROM avisos WHERE estado = 'aprovado'";
+
+                try{
+                  $stmt = $conn -> prepare( $sql );
+                  $stmt -> execute();
+                }catch( PDOException $e ) {
+                  echo '<p>Hubo un error al consultar la base de datos</p>';
+                }
+
+                while( $res = $stmt -> fetch()):
+              ?>
                 <tr>
-                  <td>Juan Pérez</td>
-                  <td>Apertura de mercado regional</td>
-                  <td>2025-11-10</td>
-                  <td><span class="badge bg-success">Aprobado</span></td>
-                  <td><button class="btn btn-danger btn-sm">Eliminar</button></td>
+                  <td><?= $res['lugar']  ?></td>
+                  <td><?= $res['titulo'] ?></td>
+                  <td><?= $res['fecha'] ?></td>
+                  <td><span class="badge bg-success"><?= $res['estado'] ?></span></td>
+                  <td>
+                    <form action="./dashboardCrud/editBlog.php" method="post">
+                      <input type="text" name="id" value="<?= $res['id'] ?>" hidden>
+                      <button type="submit" name="action" value="eliminar" class="btn btn-danger btn-sm">Eliminar</button>
+                    </form>
+                  </td>
                 </tr>
+              <?php endwhile; ?>
               </tbody>
             </table>
           </div>
@@ -162,13 +197,31 @@
                 </tr>
               </thead>
               <tbody>
+                <?php 
+                $sql = "SELECT * FROM avisos WHERE estado = 'rechazado'";
+
+                try{
+                  $stmt = $conn -> prepare( $sql );
+                  $stmt -> execute();
+                }catch( PDOException $e ) {
+                  echo '<p>Hubo un error al consultar la base de datos</p>';
+                }
+
+                while( $res = $stmt -> fetch()):
+              ?>
                 <tr>
-                  <td>Ana Ramírez</td>
-                  <td>Bloqueo por transportistas</td>
-                  <td>2025-11-11</td>
-                  <td><span class="badge bg-danger">Rechazado</span></td>
-                  <td><button class="btn btn-success btn-sm">Agregar</button></td>
+                  <td><?= $res['lugar']  ?></td>
+                  <td><?= $res['titulo'] ?></td>
+                  <td><?= $res['fecha'] ?></td>
+                  <td><span class="badge bg-danger"><?= $res['estado'] ?></span></td>
+                  <td>
+                    <form action="./dashboardCrud/editBlog.php" method="post">
+                      <input type="text" name="id" value="<?= $res['id'] ?>" hidden>
+                      <button type="submit" name="action" value="aprovar" class="btn btn-success btn-sm">Agregar</button>
+                    </form>
+                  </td>
                 </tr>
+                <?php endwhile; ?>
               </tbody>
             </table>
           </div>

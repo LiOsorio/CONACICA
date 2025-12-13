@@ -29,42 +29,60 @@
         
         <?php 
         $sql = "SELECT fechaActualizacion FROM preciosRegistrados ORDER BY fechaActualizacion ASC LIMIT 1";
+
+        $stmt = $conn -> prepare( $sql );
+        $stmt -> execute();
+        $res = $stmt -> fetch();
+
         ?>
         <div class="text-center mb-5">
             <span class="badge bg-warning text-dark p-2">
-                <i class="fas fa-calendar-check me-1"></i> Datos actualizados al 15 de Octubre, 2025
+                <i class="fas fa-calendar-check me-1"></i> Datos actualizados al <?php echo $res['fechaActualizacion'] ?>
             </span>
         </div>
 
         <div class="card p-4 shadow-sm mb-5">
             <h4 class="card-title fw-bold small text-muted mb-3">Filtra tu Búsqueda:</h4>
-            <form class="row g-3 align-items-end">
-                
+            <div class="row g-3 align-items-end">
+                <?php 
+                    $sql = "SELECT * FROM producto";
+                    try{
+                        $stmt = $conn -> prepare( $sql );
+                        $stmt -> execute();
+                    } catch( PDOException $e ) {
+                        echo "<p>Hay un error al tratar de conectar con el servidor, Intente de nuevo más tarde.</p>";
+                    }
+                ?>
                 <div class="col-md-4">
                     <label for="filtro-producto" class="form-label small">Producto</label>
-                    <select class="form-select" id="filtro-producto">
-                        <option selected>Aguacate Hass</option>
-                        <option>Tomate Saladet</option>
-                        <option>Frijol Negro</option>
-                        </select>
+                    <select class="form-select" id="filtroProducto">
+                        <option value="">Todos</option>
+                        <?php while( $res = $stmt -> fetch() ): ?>
+                            <option value="<?php echo $res['productoId'] ?>"><?php echo $res['productName'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
                 </div>
 
+                <?php 
+                    $sql = "SELECT * FROM central";
+                    try{
+                        $stmt = $conn -> prepare( $sql );
+                        $stmt -> execute();
+                    } catch ( PDOException $e ) {
+                        echo "<p>Ocurrió un error al conectar con el servidor. Por favor intentelo de nuevo más tarde.</p>";
+                    }
+
+                ?>
                 <div class="col-md-4">
                     <label for="filtro-central" class="form-label small">Central de Abasto</label>
-                    <select class="form-select" id="filtro-central">
-                        <option selected>CEDA Iztapalapa</option>
-                        <option>CEDA Ecatepec</option>
-                        </select>
+                    <select class="form-select" id="filtroCentral">
+                        <option value="">Todos</option>
+                        <?php while( $res = $stmt -> fetch() ): ?>
+                            <option value="<?php echo $res['centralId'] ?>"><?php echo $res['centralName'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
                 </div>
-
-                
-
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-know-us w-100 fw-bold">
-                        <i class="fas fa-search"></i>
-                    </button>
-                </div>
-            </form>
+            </div>
         </div>
 
         <h3 class="fw-bold mb-3">Resultados Recientes</h3>
@@ -101,7 +119,7 @@
                     echo "<p>Hubo un error al consultar los datos.</p>";
                 }
                 ?>
-                <tbody>
+                <tbody id="preciosPub">
                     <?php while( $res = $stmt -> fetch() ): ?>
                     <tr>
                         <td class="fw-bold"><?php echo $res['productName'] ?></td>
@@ -124,6 +142,44 @@
 
 
     <script src="./src/js/bootstrap.bundle.js"></script>
+    <script>
+        const filtroProducto = document.getElementById('filtroProducto');
+        const filtroCentral = document.getElementById('filtroCentral');
+
+        filtroProducto.addEventListener('change', filtrarTabla);
+        filtroCentral.addEventListener('change', filtrarTabla);
+
+
+        function filtrarTabla(){
+            const productoId = filtroProducto.value;
+            const centralId = filtroCentral.value;
+
+            fetch( './dashboardCrud/gestionPreciosPub.php', {
+                method: 'POST',
+                headers: {
+                    "Content-Type":"application/json"
+                },
+                body: JSON.stringify({
+                    action: 'filtrarTablaPub',
+                    productoId: productoId,
+                    centralId: centralId
+                })
+            })
+            .then( res => {
+                if( !res.ok ){
+                    throw new Error('Error');
+                }
+                return res.json();
+            })
+            .then( data => {
+                if( !data ){
+                    return
+                }
+                document.getElementById('preciosPub').innerHTML = data.res;
+            } )
+            .catch( err => console.log(err));
+        }
+    </script>
 </body>
 </html>
 

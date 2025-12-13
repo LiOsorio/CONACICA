@@ -49,4 +49,14 @@ CREATE TABLE correos (
 	fecha date not null,
 	estado enum('Nuevo', 'Visto') default 'Nuevo'
 );
+create table avisos (
+	id int auto_increment primary key,
+	titulo varchar(100) not null,
+	lugar varchar(130),
+	fecha date,
+	tipo enum('Bloqueo','Mercado','Agricultura','Clima','Logística','General') default 'General',
+	estado enum('aprovado','proceso','rechazado') default 'proceso',
+	aviso varchar(300),
+	evidencia varchar(255)
+);
 

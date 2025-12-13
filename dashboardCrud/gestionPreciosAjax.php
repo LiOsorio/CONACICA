@@ -57,7 +57,7 @@
                             <td>
                                 <form action="./dashboardCrud/gestionPrecios.php" method="post">
                                     <input type="text" name="productoId" value="'.$res['preciosId'].'" hidden>
-                                    <button class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalEditar"><i class="bi bi-pencil"></i> Editar</button>
+                                    <button class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" type="button" data-bs-target="#modalEditar"><i class="bi bi-pencil"></i> Editar</button>
                                     <button class="btn btn-sm btn-danger" type="submit" name="action" value="deletePrecio"><i class="bi bi-trash"></i> Eliminar</button>
                                 </form>
                             </td>
@@ -104,7 +104,7 @@
                     <td>
                         <form action="./dashboardCrud/gestionPrecios.php" method="post">
                             <input type="text" name="productoId" value="'.$res['preciosId'].'" hidden>
-                            <button class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#modalEditar"><i class="bi bi-pencil"></i> Editar</button>
+                            <button class="btn btn-sm btn-warning me-2" type="button" data-bs-toggle="modal" data-bs-target="#modalEditar"><i class="bi bi-pencil"></i> Editar</button>
                             <button class="btn btn-sm btn-danger" type="submit" name="action" value="deletePrecio"><i class="bi bi-trash"></i> Eliminar</button>
                         </form>
                     </td>
