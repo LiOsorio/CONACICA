@@ -11,13 +11,12 @@
           <?php if( !empty( $_SESSION['userId'] ) ): ?>
             <li class="nav-item"><a class="nav-link active" href="admin-dashboard.php">Dashboard</a></li>
           <?php endif; ?>
-          <li class="nav-item"><a class="nav-link active" href="#quienes-somos">Quiénes Somos</a></li>
+          <li class="nav-item"><a class="nav-link active" href="./src/pdf/PRESENTACION 2023 .pdf" target="_blank">Quiénes Somos</a></li>
           <li class="nav-item dropdown">
-            <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown">Servicios/Apoyo</a>
+            <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown">Apoyo</a>
             <ul class="dropdown-menu bg-green">
               <li><a class="dropdown-item" href="cursos.php">Cursos y Capacitación</a></li>
-              <li><a class="dropdown-item" href="directorio.php">Directorio Mayorista</a></li>
-              <li><a class="dropdown-item" href="ruta/a/alianzas.html">Vacantes</a></li>
+              <!-- <li><a class="dropdown-item" href="directorio.php">Directorio Mayorista</a></li> -->
             </ul>
           </li>
 
@@ -25,8 +24,8 @@
             <a class="nav-link active dropdown-toggle" href="#" data-bs-toggle="dropdown">Información</a>
             <ul class="dropdown-menu bg-green">
               <li><a class="dropdown-item text-dark" href="precios.php">Precios de Mercado</a></li>
-              <li><a class="dropdown-item" href="blog.php">Blog / Noticias</a></li>
-              <li><a class="dropdown-item" href="ruta/a/alianzas.html">Alianzas</a></li>
+              <li><a class="dropdown-item" href="blog.php">Blog CONACICA</a></li>
+                <li><a class="dropdown-item" href="participaciones.php">Participaciones</a></li>
             </ul>
           </li>
           <li class="nav-item">

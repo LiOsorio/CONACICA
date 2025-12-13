@@ -1,12 +1,11 @@
 <?php
 
-use function PHPSTORM_META\type;
-
     session_start();
     
     include_once(__DIR__ . "/../config/Connection.php");
 
     $conn = connection();
+    $location = 'Location: ./../admin-precios.php';
     $error = '';
 
     if( !isset( $_SESSION['userId'] ) || empty( $_SESSION['userId'] ) ){
@@ -45,13 +44,13 @@ use function PHPSTORM_META\type;
             } catch( PDOException $e ) {
                 $error = 'Error al verificar existencia del producto';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin-dashboard.php');
+                header( $location );
                 exit;
             }
 
             if( $res ){
                 $_SESSION['error'] = $error;
-                header( 'Location: /' );
+                header( $location );
                 exit;
             }
 
@@ -60,12 +59,12 @@ use function PHPSTORM_META\type;
                 $stmt = $conn -> prepare( $sql );
                 $stmt -> execute( [ 'nombre' => $nombreProducto ] );
                 $res = $stmt -> fetch();
-                header( 'Location: /' );
+                header( $location );
                 exit;
             } catch( PDOException $e ) {
                 $error = "Hubo un error al ingresar el producto a la base de datos.";
                 $_SESSION['error'] = $error;
-                header( 'Location: /' );
+                header( $location );
                 exit;
             }
         }
@@ -82,14 +81,14 @@ use function PHPSTORM_META\type;
             } catch( PDOException $e ) {
                 $error = 'Hubo un error al verificar existencia de la central';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin/admin-dashboard.php' );
+                header( $location );
                 exit;
             }
 
             if ( $res ) {
                 $error = 'Ya existe esta central.';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin-dashboard.php' );
+                header( $location );
                 exit;
             }
 
@@ -99,12 +98,12 @@ use function PHPSTORM_META\type;
                 $stmt -> execute( [ 'nombre' => $nombreCentral ] );
                 $res = $stmt -> fetch();
 
-                header( 'Location: ./../admin-dashboard.php' );
+                header( $location );
                 exit;
             } catch ( PDOException $e ) {
                 $error = 'Error al ingresar la central a la base de datos.';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin-dashboard.php' );
+                header( $location );
                 exit;
             }
         }
@@ -119,7 +118,7 @@ use function PHPSTORM_META\type;
             if( !in_array( $unidad, $unidadesValidas ) ){
                 $error = 'La unidad no es valida';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin-dashboard.php' );
+                header( $location );
                 exit;
             }
             ( !isset( $_POST['centralRegistrar'] ) || empty( $_POST['centralRegistrar'] ) ) ? $error = 'Es necesario seleccionar una central' : $central = $_POST['centralRegistrar'];
@@ -134,13 +133,13 @@ use function PHPSTORM_META\type;
                 if( !$res ) {
                     $error = 'El producto no existe.';
                     $_SESSION['error'] = $error;
-                    header( 'Location: ./../admin-dashboard.php' );
+                    header( $location );
                     exit;
                 }
             }catch ( PDOException $e ) {
                 $error = 'Hubo un error al verificar existencia de producto';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin-dashboard.php' );
+                header( $location );
                 exit;
             }
 
@@ -153,13 +152,13 @@ use function PHPSTORM_META\type;
                 if( !$res ){
                     $error = 'No existe la central';
                     $_SESSION['error'] = $error;
-                    header( 'Location: ./../admin-dashboard.php' );
+                    header( $location );
                     exit;
                 }
             }catch( PDOException $e ){
                 $error = 'Hubo un problema al verificar existencia de central';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin-dashboard.php');
+                header( $location );
                 exit;
             }
 
@@ -173,12 +172,62 @@ use function PHPSTORM_META\type;
                     'unidad' => $unidad,
                     'precio' => $precio
                 ] );
-                header( 'Location: ./../admin-precios.php' );
+                header( $location );
                 exit;
             } catch( PDOException $e ) {
                 $error = 'Hubo un problema al ingresar el precio';
                 $_SESSION['error'] = $error;
-                header( 'Location: ./../admin-dashboard.php' );
+                header( $location );
+                exit;
+            }
+        }
+
+        if( $_POST['action']  === 'deletePrecio' ){
+            ( !isset( $_POST['productoId'] ) || empty( $_POST['productoId'] ) ) ? $error = 'hay un problema al eliminar el precio' : $preciosId = $_POST['productoId'] ;
+            if( !empty( $error ) ){
+                $_SESSION['error'] = $error;
+                header( $location );
+                exit;
+            }
+            $sql = "DELETE FROM preciosRegistrados WHERE preciosId = :id";
+            try{
+                $stmt = $conn -> prepare( $sql );
+                $stmt -> execute([ 'id' => $preciosId ]);
+                $res = $stmt -> rowCount();
+                if( $res === 0 ){
+                    $_SESSION['error'] = "No se elimino el registro.";
+                }
+                header( $location );
+                exit;
+            } catch( PDOException $e ) {
+                $_SESSION['error'] = 'Hubo un error al eliminar el registro.';
+                header( $location );
+                exit;
+            }
+        }
+        if( $_POST['action'] === "deleteProduct" ){
+            ( !isset( $_POST['productId'] ) || empty( $_POST['productId'] ) ) ? $error = "Problemas al borrar el producto ( 1 )." : $productId = $_POST['productId'];
+
+            if( !empty( $empty ) ) {
+                $_SESSION['error'] = $error;
+                header( $location );
+                exit;
+            }
+
+            $sql = "DELETE FROM producto WHERE productoId = :id";
+            try{
+                $stmt = $conn -> prepare( $sql );
+                $stmt -> execute( [ 'id' => $productId ] );
+                $res = $stmt -> rowCount();
+
+                if( $res == 0 ){
+                    $_SESSION['error'] = "No se borraron los datos.";
+                }
+                header( $location );
+                exit;
+            } catch ( PDOException $e ) {
+                $_SESSION['error'] = "hubo un problema all iniciar sesion.";
+                header( $location );
                 exit;
             }
         }

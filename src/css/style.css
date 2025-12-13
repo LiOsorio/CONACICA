@@ -1,0 +1,1037 @@
+
+/* Font conacia */
+
+@font-face {
+  font-family: 'Ethnocentric';
+  src: url('./../fonts/Ethnocentric-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+.logoConacica{
+  font-family: 'Ethnocentric', sans-serif;
+}
+/* Estilos para cards BENEFICIOS y PILARES CONACICA*/
+
+/* Estilos iniciales para la transición */
+.card-hover-effect {
+  transition: all 0.3s ease-in-out;
+  border: 1px solid #dee2e6; /* Borde de Bootstrap para cards */
+}
+
+/* Estilos al pasar el mouse */
+.card-hover-effect:hover {
+  background-color: #eef2ea;
+  
+  border: 1px solid rgba(0, 0, 0, 0.3); 
+  
+  transform: scale(1.02); 
+  
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.6);
+  
+  z-index: 10; 
+}
+
+/* AJUSTE DE IMAGENES EN CARDS (EN TODAS PERO LO OCUPO EN +BLOG)*/
+.card img {
+  height: 220px;
+  object-fit: cover;
+}
+
+/* PARA HACER RESPONSIVE LAS CARDS*/
+
+@media (max-width: 768px) { /* SI EL ANCHO ES MAXIMO 768 ENTONCES LA IMAGEN DE LA CARD VA A MEDIR DE ALTO 180PX*/
+
+  .card img {
+    height: 180px;
+  }
+}
+
+.carousel-item img {
+  max-height: 80vh; /* PARA QUE EL CARRUSEL CUBRA UN PORCENTAJE DE LA PANTALLA ESE LO PUEDO MOVER PARA QUE SE HAGA MÁS GRANDE O PEQUEÑA LA ALTURA */
+  object-fit: cover; /* recorta sin deformar */
+  align-items: center;
+}
+
+
+/* === SECCIÓN ALIANZAS - CARRUSEL DE LOGOS CSS === */
+
+/* --- CONTENEDOR PRINCIPAL la cajita donde estan todos los logos --- */
+.logo-marquee {
+  overflow: hidden;
+  width: 100%;
+  background-color: #ffffff;
+  position: relative;
+}
+
+/* --- PISTA DE LOGOS QUE SE MUEVE dentro de la caja principal viene una caja seccionada en otras cajas y cada una tiene un logo --- */
+.logo-track {
+  display: flex;
+  align-items: center; /* --- Aqui tuve que poner el flex y alinear en el centro para que se vean en medio flotando --- */
+  animation: scroll 50s linear infinite;
+  width: max-content;
+}
+
+/* --- CADA LOGO EN SU PROPIA CAJA CENTRADA ya en su cajita viene cada logo bien centradito y cada uno con su tamaño --- */
+.logo-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;    /* Aqui nos dice que tan grande es la caja donde viene el logo, la caja pq el logo tiene su tamaño aparte */
+  width: 300px;     /* ancho de cada cajita, solo nos da el tamaño en pantallas grandes ya despues lo hago responsive mas abajo*/
+  margin: 0 20px;    /* separación horizontal espacio entre cada cajita para que no se vea amontonado, 0 en el otro pq no queremos mucho espacio en y */
+  flex-shrink: 0;    /* evita que se encojan */
+}
+
+/* --- IMÁGENES DE LOS LOGOS ahora si tamaños por imagen, no por caja--- */
+.logo-wrapper img {
+  max-height: 160px;  /* controla tamaño máximo de cada imagen, no puede ser más grande */
+  max-width: 100%; /* controla tamaño del ancho del logo, quiero que abarque todo el % de la caja*/
+  object-fit: contain;
+  object-position: center; /* enmedio para que quede bien acomodadita*/
+  filter: grayscale(40%);
+  opacity: 0.85; /* no tan opaca para que se vea cool el efecto cuando pase el mouse en cada logo */
+  transition: all 0.3s ease;
+}
+
+/* --- EFECTO AL PASAR EL RATÓN, hacemos el hover y ahora si de .85 pasa a 1 y se ve más cool --- */
+.logo-wrapper img:hover {
+  transform: scale(1.1);
+  opacity: 1;
+  filter: none;
+}
+
+/* --- ANIMACIÓN DE DESPLAZAMIENTO CONTINUO --- */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-80%);
+  }
+}
+
+/* --- RESPONSIVE pantallas medianitas --- */
+@media (max-width: 992px) {
+  .logo-wrapper {
+    height: 100px;
+    width: 180px;
+    margin: 0 15px;
+  }
+
+  .logo-wrapper img {
+    max-height: 6rem;
+  }
+
+  .logo-track {
+    animation-duration: 30s;
+  }
+}
+
+/* aquí esta el responsive cuando sean pequeñas mis pantallas*/
+@media (max-width: 768px) {
+  .logo-wrapper {
+    height: 90px;
+    width: 150px;
+    margin: 0 10px;
+  }
+
+  .logo-wrapper img {
+    max-height: 5rem;
+  }
+
+  .logo-track {
+    animation-duration: 25s;
+  }
+}
+
+/* ------------------------------------------------ */
+/* --- ESTILOS CRÍTICOS DEL CARRUSEL CORREGIDOS  AQUI ME QUEDE PARA SEGUIR ACOMODANDO EL CSS--- */
+/* ------------------------------------------------ */
+
+/* 1. Las flechas deben tener el Z-INDEX MÁS ALTO y ser clicables */
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 9999 !important; /* Fuerza máxima de apilamiento para asegurar el clic */
+}
+
+/* 2. Estilo para la CAPTION de Bootstrap (que funciona como tu overlay) */
+.carousel-caption {
+    /* Ocupa el 100% del alto y ancho del slide para simular el overlay */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    
+    /* Configura el fondo inicialmente transparente y añade la transición */
+    background-color: transparent; 
+    transition: background-color 0.3s ease-in-out; 
+    
+    /* El z-index de la caption es lo suficientemente bajo para que las flechas lo superen */
+}
+
+/* 3. Efecto al pasar el ratón: aplica el fondo oscuro */
+.carousel-item:hover .carousel-caption {
+    background-color: rgba(0, 0, 0, 0.6); /* Oscuro al hacer hover */
+}
+
+
+/* Mejora el diseño visual de las flechas de navegación (no afecta la funcionalidad) */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none;
+    background-color: rgba(0, 0, 0, 0.4); 
+    border-radius: 50%;
+    width: 2.5rem; 
+    height: 2.5rem;
+}
+
+/* El contenido visible dentro de la flecha */
+.carousel-control-prev-icon::before {
+    content: '<';
+    color: white;
+    font-weight: bold;
+    display: block;
+    line-height: 2.5rem; 
+    text-align: center;
+}
+
+.carousel-control-next-icon::before {
+    content: '>';
+    color: white;
+    font-weight: bold;
+    display: block;
+    line-height: 2.5rem; 
+    text-align: center;
+}
+
+
+
+
+
+        /* --- ESTILO PARA TEXTO CON BORDE (LOGO CONACICA) --- */
+
+.logo-stroked {
+    /* Color principal del texto: Rojo (puedes ajustarlo a tu tono) */
+    color: #FF0000 !important; 
+    
+    /* El borde se simula con múltiples sombras de texto */
+    text-shadow: 
+        /* Sombra Superior Izquierda (Blanco) */
+        -1px -1px 0 #FFFFFF, 
+        /* Sombra Superior Derecha (Blanco) */
+        1px -1px 0 #FFFFFF, 
+        /* Sombra Inferior Izquierda (Blanco) */
+        -1px 1px 0 #FFFFFF,
+        /* Sombra Inferior Derecha (Blanco) */
+        1px 1px 0 #FFFFFF; 
+    
+    /* Opcional: Para que el texto sea aún más grande y visible */
+    font-size: 1.5rem; 
+}
+        /* Estilos personalizados para la Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../../campo_mexicano.jpg'); 
+            background-size: cover;
+            background-position: center;
+            height: 90vh; /* Mayor altura para que se vea el logo y el texto */
+            display: flex;
+            flex-direction: column; /* Para apilar elementos verticalmente */
+            justify-content: center; /* Centrar verticalmente */
+            align-items: center; /* Centrar horizontalmente */
+            color: white;
+            text-align: center;
+            position: relative; /* Necesario para posicionar el logo si se quiere de forma absoluta */
+        }
+
+        .dropdown-menu .dropdown-item {
+        /* Esto asegura que el texto normal no sea el gris muy claro de Bootstrap, sino uno más oscuro (casi negro) */
+        color: white !important; 
+        }
+        .dropdown-menu .dropdown-item:hover,
+        .dropdown-menu .dropdown-item:focus {
+            color: white;
+            background-color: #38761D;
+
+        }
+
+        .navbar-brand{
+
+            color: white;
+        }
+
+        .hero-section .logo-conacica {
+            
+
+    
+            /* Asegura que no se estire más allá del contenedor */
+         
+            object-fit: contain; /* Asegura que la imagen completa se vea sin recortarse */
+            margin-bottom: 2rem; /* Espacio debajo del logo */
+            border-radius: 50%; 
+            border: 10px solid #fff;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Limita el logo del Hero Section en pantallas pequeñas */
+        .logo-hero-responsive {
+         /* Establece un tamaño máximo en móviles (ajusta 250px si lo quieres más grande o pequeño) */
+            max-width: 25rem;
+            
+            /* Asegura que el logo no se estire más allá de ese límite */
+            width: 100%; 
+            height: auto; 
+            margin-top: 5rem;            
+        }
+
+
+        /* FUERZA LA SEPARACIÓN DE LA SECCIÓN SIGUIENTE (solo si mt-5 no funciona) */
+/* Esto se aplica a la sección "Nosotros" para empujarla hacia abajo */
+@media (max-width: 767px) {
+    #quienes-somos {
+        /* Fuerza un gran margen superior en pantallas pequeñas */
+        margin-top: 100px !important; 
+    }
+}
+/* BOTON DEL HERO DE LIGHT A DAKR*/
+
+        .btn-cta-hero {
+            background-color: #fff; 
+            color: #333; 
+            border: 2px solid #fff; 
+            
+            /* Transición suave para el efecto hover */
+            transition: all 0.3s ease; 
+        }
+
+        .btn-cta-hero:hover {
+            background-color: #6dba4c; 
+            color: #fff; 
+            border-color: #2f773c; 
+        }
+
+
+        
+/* BOTON DE seccion de participaciones DE LIGHT A DAKR*/
+
+        .btn-cta-hero1 {
+            background-color: #fff; 
+            color: #333; 
+            border: 2px solid #333; 
+            
+            /* Transición suave para el efecto hover */
+            transition: all 0.3s ease; 
+        }
+
+        .btn-cta-hero1:hover {
+            background-color: #6dba4c; 
+            color: #fff; 
+            border-color: #2f773c; 
+        }
+
+        /* HERO */
+
+        .hero-section .hero-text-content {
+            z-index: 1; /* Asegura que el texto esté sobre el fondo */
+            max-width: 800px; /* Limita el ancho del texto para mejor lectura */
+        }
+
+        /* OTRO BOTON HERO */
+        .btn-agro {
+            background-color: #dddddd; /* Tono dorado/mostaza similar al de tu imagen */
+            border-color: #ddd;
+            color: black; /* Texto oscuro para contrastar */
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 5px; /* Bordes ligeramente redondeados */
+            transition: all 0.3s ease;
+            margin-top: 3rem; /* Separación del texto principal */
+        }
+        .btn-agro:hover {
+            background-color: #6dba4c; /* Un poco más oscuro al pasar el mouse */
+            border-color: #6B7F46;
+            color: black; /* Texto blanco al pasar el mouse */
+        }
+
+        /* Color de ejemplo para un verde agro (usado en Navbar y cards), puedes cambiarlo en tu CSS final */
+        .text-conacica-green { color: #38761D !important; }
+        .border-conacica-green { border-color: #38761D !important; }
+        .btn-outline-conacica-green {
+            color: #38761D;
+            border-color: #38761D;
+        }
+        .btn-outline-conacica-green:hover {
+            background-color: #38761D;
+            color: white;
+        }
+
+        
+
+        .nav-link{
+          color: #38761D;
+        }
+
+        .nav-link:hover{
+          color: #38761D;
+        }
+
+        .bg-green{
+            background: #6dba4c;
+
+        }
+        .text-primary-custom {
+            color: #FF0000;
+        }
+
+        .text-secondary-custom {
+            color: #6dba4c;
+        }
+
+        /* Botones personalizados */
+        .btn-primary-custom {
+            background-color: #FF0000;
+            border: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .btn-primary-custom:hover {
+            background-color: #BBBD63;
+            color: #000;
+        }
+
+        .btn-secondary-custom {
+            background-color: #6dba4c;
+            border: none;
+            color: #fff;
+            transition: 0.3s;
+        }
+        .btn-secondary-custom:hover {
+            background-color: #BBBD63;
+            color: #000;
+        }
+
+        /* Fondo del modal */
+        .login-modal {
+            background-color: #fefefe;
+            border-radius: 15px;
+        }
+
+        /* Inputs personalizados */
+        .input-custom:focus {
+            border-color: #6dba4c;
+            box-shadow: 0 0 0 0.2rem rgba(109, 186, 76, 0.25);
+        }
+
+        /* Fuente general del formulario */
+        .login-modal label,
+        .login-modal a,
+        .login-modal h5 {
+            color: #333;
+        }
+
+
+        /* Asegura que el contenedor tenga la posición base */
+.contenedor-imagen {
+     overflow: hidden;
+
+}
+
+
+/* --- Diseño 50/50 SECTION NOSOTROS--- */
+    .border-conacica-green {
+        border-color: #6dba4c !important; /* Tu color verde corporativo */
+    }
+
+    #nosotros-mega-card {
+        /* 1. Altura dinámica: Ocupa toda la altura visible menos la Navbar */
+    height: 60vh; /* Ocupa la mitad de la pantalla */
+        /* 2. Flexbox para centrar el contenido verticalmente */
+        display: flex;
+        align-items: center; 
+        overflow: hidden; /* Evita scroll innecesario */
+
+        /* Elimina el padding para que la tarjeta llegue a los bordes */
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+     #participaciones-mega-card {
+        /* 1. Altura dinámica: Ocupa toda la altura visible menos la Navbar */
+    height: 80vh; 
+        /* 2. Flexbox para centrar el contenido verticalmente */
+        display: flex;
+        align-items: center; 
+        overflow: hidden; /* Evita scroll innecesario */
+
+        /* Elimina el padding para que la tarjeta llegue a los bordes */
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+  
+
+    /* 3. Asegura que la fila interna ocupe toda la altura */
+    #nosotros-mega-card .row-full-height {
+        width: 100%;
+    height: 100%;
+    margin: 0;
+    }
+
+     #participaciones-mega-card .row-full-height {
+        width: 100%;
+    height: 100%;
+    margin: 0;
+    }
+  
+
+    /* 4. Ajuste de imagen para cubrir el 50% sin distorsión */
+    .col-img-full img {
+        height: 100%; /* La imagen toma la altura completa de su columna */
+        width: 100%;
+        object-fit: cover; /* CLAVE: Rellena el espacio 50% sin distorsionar */
+    }
+
+/* Estilo inicial del Panel (Overlay) */
+
+
+.overlay {
+    background-color: rgba(237, 233, 233, 0.6); /* Oscuro con 60% de opacidad */
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.3s ease-in-out; /* Transición suave */
+    z-index: 20; /* Nivel 20, menor que las flechas (50) pero mayor que las imágenes (1) */
+    pointer-events: none; /* CLAVE: Permite que los clics pasen a los elementos debajo (las flechas) */
+    margin: 0;
+
+}
+
+.contenedor-imagen:hover .overlay {
+    opacity: 1;
+    /* QUITAMOS pointer-events: none; en hover si queremos que el texto sea seleccionable/clicable */
+}
+
+/* Estilo para el texto dentro del overlay */
+.overlay p {
+    margin: 0;
+}
+
+.carousel-item {
+    position: relative; /* Esencial para posicionar el pseudo-elemento */
+    overflow: hidden; /* Asegura que el overlay no se desborde */
+}
+/* --- Control del tamaño y forma del carrusel --- */
+#carousel-EVENTOS .carousel-item {
+  position: relative;
+  overflow: hidden;
+  height: 70vh; /* Altura uniforme y proporcional (puedes ajustar a 60-80vh) */
+  border-radius: 15px; /* Bordes redondeados */
+}
+
+/* Imagen del carrusel */
+#carousel-EVENTOS .carousel-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Mantiene proporciones y llena el espacio */
+  object-position: center; /* Centra el encuadre */
+  border-radius: 15px; /* Bordes redondeados */
+  transition: transform 0.5s ease;
+}
+
+/* Efecto de zoom suave al pasar el mouse */
+#carousel-EVENTOS .carousel-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Overlay oscuro al hacer hover */
+#carousel-EVENTOS .carousel-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(7, 7, 7, 0.6);
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  border-radius: 15px;
+}
+
+/* Mostrar el overlay y el texto */
+#carousel-EVENTOS .carousel-item:hover::before {
+  opacity: 1;
+}
+
+#carousel-EVENTOS .carousel-caption {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+  z-index: 10;
+  background-color: transparent !important;
+  bottom: 50%;
+  transform: translateY(50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#carousel-EVENTOS .carousel-item:hover .carousel-caption {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 992px) {
+  #carousel-EVENTOS .carousel-item {
+    height: 50vh;
+  }
+}
+
+@media (max-width: 576px) {
+  #carousel-EVENTOS .carousel-item {
+    height: 35vh;
+  }
+
+  #carousel-EVENTOS .carousel-caption h5 {
+    font-size: 1rem;
+  }
+
+  #carousel-EVENTOS .carousel-caption p {
+    font-size: 0.8rem;
+  }
+}
+
+/* impacto iconos */
+
+.impacto {
+  background-color: #f4f9f4; /* verde muy suave */
+  border-radius: 15px;
+}
+.impacto i {
+  transition: transform 0.3s ease;
+}
+.impacto i:hover {
+  transform: scale(1.1);
+}
+
+/* participaciones */
+
+.cta-final {
+  background-color: #1a7431; /* verde CONACICA */
+}
+.cta-final .btn-light:hover {
+  background-color: #f4f9f4;
+  color: #1a7431;
+}
+
+
+/* HERO SECTION */
+/* ========================= */
+
+.hero-section {
+  background-color: #fff;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.logo-hero-responsive {
+  max-width: 400px;
+  height: auto;
+}
+
+
+/* Responsive para pantallas pequeñas para hero */
+@media (max-width: 992px) {
+  .hero-section .row {
+    flex-direction: column-reverse; /* Texto abajo del logo */
+  }
+
+  .hero-section {
+    padding-top: 4rem;
+    padding-bottom: 3rem;
+  }
+
+  .hero-section h1 {
+    font-size: 1.8rem;
+  }
+
+  .hero-section p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .logo-hero-responsive {
+    max-width: 220px;
+    margin-bottom: 2rem;
+  }
+
+  .btn-cta-hero {
+    font-size: 1rem;
+    padding: 0.6rem 1.4rem;
+  }
+}
+
+
+/* Responsive para evitar que se amontone en sección nosotros */
+@media (max-width: 992px) {
+  #nosotros-mega-card {
+    height: auto; /* Deja que se acomode naturalmente */
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #nosotros-mega-card .row-full-height {
+    flex-direction: column;
+  }
+
+  #nosotros-mega-card .col-lg-6 {
+    height: auto;
+    padding: 2rem 1.5rem;
+  }
+
+   #nosotros-mega-card .py-5 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  #nosotros-mega-card .p-5 {
+    padding: 1.5rem !important;
+  }
+
+
+  #nosotros-mega-card h2 {
+    font-size: 1.8rem;
+  }
+
+  #nosotros-mega-card p {
+    font-size: 1rem;
+  }
+
+  .col-img-full img {
+    height: 250px;
+    object-fit: cover;
+  }
+}
+@media(min-width: 1200px){
+.col-img-full img {
+  margin-top: 20%;
+  }
+
+  }
+
+/* Pequeño refinamiento visual */
+@media (max-width: 576px) {
+  #nosotros-mega-card .col-lg-6 {
+    padding: 1.5rem 1rem;
+  }
+}
+
+
+/* Responsive para evitar que se amontone en sección participaciones */
+@media (max-width: 992px) {
+  #participaciones-mega-card {
+    height: auto; /* Deja que se acomode naturalmente */
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #participaciones-mega-card .row-full-height {
+    flex-direction: column;
+  }
+
+  #participaciones-mega-card .col-lg-6 {
+    height: auto;
+    padding: 2rem 1.5rem;
+  }
+
+   #participaciones-mega-card .py-5 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  #participaciones-mega-card .p-5 {
+    padding: 1.5rem !important;
+  }
+
+
+  #participaciones-mega-card h2 {
+    font-size: 1.8rem;
+  }
+
+  #participaciones-mega-card p {
+    font-size: 1rem;
+  }
+
+  .col-img-full img {
+    height: 250px;
+    object-fit: cover;
+  }
+}
+
+/* Pequeño refinamiento visual */
+@media (max-width: 576px) {
+  #participaciones-mega-card .col-lg-6 {
+    padding: 1.5rem 1rem;
+  }
+}
+
+
+/* Responsive para evitar que se amontone en sección restaurante */
+
+#restaurante-mega-card {
+        /* 1. Altura dinámica: Ocupa toda la altura visible menos la Navbar */
+    height: 80vh; 
+        /* 2. Flexbox para centrar el contenido verticalmente */
+        display: flex;
+        align-items: center; 
+        overflow: hidden; /* Evita scroll innecesario */
+
+    
+    }
+    
+     #restaurante-mega-card .row-full-height {
+        width: 100%;
+    height: 100%;
+    }
+
+    #restaurante-mega-card .col-img-full {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+     #restaurante-mega-card .col-img-full img {
+        width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  max-height: 80vh; /* <-- evita que se salga en pantallas grandes */
+  border-radius: 8px; 
+    }
+
+@media (max-width: 992px) {
+  #restaurante-mega-card {
+    height: auto; /* Deja que se acomode naturalmente */
+    flex-direction: column;
+    text-align: center;
+  }
+
+  #restaurante-mega-card .row-full-height {
+    flex-direction: column;
+  }
+
+  #restaurante-mega-card .col-lg-6 {
+    height: auto;
+    padding: 2rem 1.5rem;
+  }
+
+   #restaurante-mega-card .py-5 {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  #restaurante-mega-card .p-5 {
+    padding: 1.5rem !important;
+  }
+
+
+  #restaurante-mega-card h2 {
+    font-size: 1.8rem;
+  }
+
+  #restaurante-mega-card p {
+    font-size: 1rem;
+  }
+
+  .col-img-full img {
+    height: 200px;
+    object-fit: cover;
+  }
+}
+
+/* Pequeño refinamiento visual */
+@media (max-width: 576px) {
+  #restaurante-mega-card .col-lg-6 {
+    padding: 1.5rem 1rem;
+  }
+}
+
+
+
+/* ===== GRID GALLERY STYLE ===== */
+.gallery-card{
+  height: 60vh;
+}
+.gallery-card img {
+  transition: transform 0.4s ease;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.1);
+}
+
+.gallery-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.gallery-card:hover .gallery-overlay {
+  opacity: 1;
+}
+
+
+        /* ASIDE */
+.filtro-aside {
+  position: sticky;
+  top: 120px;  /* <-- separa del top para que no tape tu navbar */
+  float: right;
+  width: 260px;
+  padding: 10px;
+}
+
+.filtro-aside .btn-group-vertical .btn {
+  margin-bottom: 10px;
+  border-radius: 5px !important;
+  width: 100%;
+}
+
+.filtro-aside {
+  position: sticky;
+  top: 120px; /* ajusta según la altura de tu navbar */
+}
+
+/* MODAL BLOG */
+
+#modalAviso .modal-content {
+  border-radius: 20px;
+}
+
+#modalAviso .modal-header {
+  border-bottom: none;
+}
+
+#modalAviso .modal-footer {
+  border-top: none;
+}
+/* imagen blog */
+.img-detalle-noticia {
+  width: 100%;
+  height: 80vh;          /* Puedes subir a 90vh si quieres que sea casi pantalla completa */
+  object-fit: cover;     /* Mantiene proporciones y llena sin deformarse */
+  border-radius: 15px;   /* Bordes redondeados como pediste */
+}
+
+
+/* css para menu de admin*/
+
+
+ .badge-nuevo {
+            background-color: #27ae60;
+        }
+        .badge-leido {
+            background-color: #7f8c8d;
+        }
+
+        
+        .body-admin {
+            min-height: 100vh;
+            display: flex;
+        }
+        .sidebar {
+            width: 260px;
+            background: #6dba4c;
+            color: white;
+        }
+        .sidebar .nav-link {
+            color: #ecf0f1;
+        }
+        .sidebar .nav-link.active {
+            background: #57933dff;
+            color: white;
+        }
+        .sidebar .nav-link:hover {
+            background: #57933dff;
+            color: white;
+        }
+        .sidebar h4 {
+            padding: 20px;
+            margin: 0;
+            font-size: 22px;
+        }
+        main {
+            flex-grow: 1;
+            padding: 25px;
+            background: #ecf0f1;
+        }
+
+
+        /* Estilos para el carrusel de noticias destacadas */
+.noticias-destacadas {
+    background-color: #f8f9fa; /* Color de fondo ligero */
+    padding: 1.5rem 0; /* Espacio vertical */
+}
+
+/* Contenedor del carrusel con el borde rojo y sombra */
+.carousel-warning {
+    border: 2px solid #dc3545 !important; /* Borde rojo de Bootstrap */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important; /* Sombra más pronunciada */
+    background-color: white; /* Aseguramos fondo blanco para el contenido */
+}
+
+/* Estilo para los controles de navegación (flechas) */
+.carousel-warning .carousel-control-prev-icon,
+.carousel-warning .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente oscuro */
+    border-radius: 50%; /* Flechas redondas */
+    width: 2.5rem; /* Tamaño de las flechas */
+    height: 2.5rem;
+    display: flex; /* Para centrar el icono */
+    align-items: center;
+    justify-content: center;
+    background-size: 50%; /* Ajuste del tamaño del icono interno */
+    filter: invert(1); /* Hace que el icono de la flecha sea blanco */
+}
+
+.carousel-warning .carousel-control-prev,
+.carousel-warning .carousel-control-next {
+    width: 5%; /* Hace que las áreas de clic sean más pequeñas */
+    opacity: 1; /* Para que siempre sean visibles (puedes ajustar) */
+}
+
+/* Mejorar la legibilidad del texto */
+.carousel-warning .carousel-item {
+    font-family: 'Arial', sans-serif; /* Fuente un poco más formal */
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #343a40; /* Texto oscuro para contraste */
+}
+
+/* Estilo para los títulos dentro del carrusel (AVISO URGENTE, NOTICIA, etc.) */
+.carousel-warning .carousel-item p {
+    text-transform: uppercase; /* MAYÚSCULAS para énfasis */
+    margin-bottom: 0.5rem; /* Espacio debajo del título */
+}
+
+/* animaciones de index */
+
+.animation{
+  opacity: 0;
+  scale: 0;
+  transition: 600ms ease;
+  translate: 0 -50%
+}
+
+.animationShow{
+  scale: 1;
+  opacity:1;
+  translate: 0 0;
+}

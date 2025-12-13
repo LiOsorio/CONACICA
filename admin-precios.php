@@ -3,9 +3,18 @@
 
     include_once __DIR__ . "/config/Connection.php";
 
+    $error;
     $conn = connection();
     $sqlCentral = 'SELECT * FROM central';
     $sqlProducto = 'SELECT * FROM  producto';
+    $input = json_decode(file_get_contents("php://input"), true);
+
+
+
+    if( isset( $_SESSION['error'] ) || !empty( $_SESSION['error'] ) ){
+        $error = $_SESSION['error'];
+        unset($_SESSION['error']);
+    }
 
 ?>
 
@@ -16,11 +25,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Precios Canasta Básica</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./src/css/bootstrap.min.css" rel="stylesheet">
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./src/css/style.css">
 </head>
 <body class="body-admin">
 
@@ -29,20 +38,16 @@
     <div class="container my-2">
         <h2 class="fw-semibold border-bottom pb-2">Gestión de Precios Mayoristas</h2>
 
-        <div class="p-3 bg-light rounded border mb-4">
-            <div class="d-flex gap-3 align-items-center">
-                <h5 class="text-secondary fs-5">Última actualización</h5>
-
-                <input type="date" class="form-control w-auto" id="fecha_actualizacion" value="2025-10-15">
-                <button class="btn btn-success"><i class="bi bi-save me-2"></i> Guardar fecha</button>
+        <?php if( !empty( $error ) ): ?>
+            <div class="p-3 bg-light rounded border mb-4 mx-auto">
+                <p class="text-danger text-center"><?php echo $error ?></p>
             </div>
-        </div>
-
+        <?php endif; ?>
         <div class="card shadow-lg mt-4">
             <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">Precios Registrados</h4>
                 <div class="input-group w-50">
-                    <input type="text" class="form-control" placeholder="Buscar producto o central...">
+                    <input type="text" id="buscarPrecios" class="form-control" placeholder="Buscar producto o central...">
                     <button class="btn btn-outline-light" type="button"><i class="bi bi-search"></i></button>
                 </div>
             </div>
@@ -58,39 +63,9 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <?php
-                            $sql = 'SELECT 
-                                    reg.preciosId,
-                                    reg.unidad,
-                                    reg.precio,
-                                    pro.productName,
-                                    cen.centralName
-                                    FROM preciosRegistrados reg
-                                    INNER JOIN producto pro
-                                    ON reg.productoId = pro.productoId
-                                    INNER JOIN central cen
-                                    ON reg.centralId = cen.centralId
-                                ';
-                                try{
-                                    $stmt = $conn -> prepare( $sql );
-                                    $stmt -> execute();
-                                } catch( PDOException $e ) {
-                                    echo '<p>Hubo un error en la base de datos.</p>';
-                                }
-                        ?>
-                        <tbody>
-                            <?php while( $res = $stmt -> fetch() ): ?>
-                            <tr>
-                                <td><?php echo $res['productName'] ?></td>
-                                <td><?php echo $res['centralName'] ?></td>
-                                <td><?php echo $res['unidad'] ?></td>
-                                <td><span class='badge bg-success fs-6'>$<?php echo $res['precio'] ?></span></td>
-                                <td>
-                                    <button class='btn btn-sm btn-warning me-2' data-bs-toggle='modal' data-bs-target='#modalEditar'><i class='bi bi-pencil'></i> Editar</button>
-                                    <button class='btn btn-sm btn-danger'><i class='bi bi-trash'></i> Eliminar</button>
-                                </td>
-                            </tr>
-                            <?php endwhile; ?>
+                        
+                        <tbody id="preciosRegist">
+                            
                         </tbody>
                     </table>
                 </div>
@@ -293,7 +268,10 @@
                         <?php while( $res = $stmt -> fetch() ): ?>
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             <?php echo $res['productName'] ?>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
+                            <form action="./dashboardCrud/gestionPrecios.php" method="post">
+                                <input type="text" name="productId" value="<?php echo $res['productoId'] ?>" hidden>
+                                <button type="submit" name="action" value="deleteProduct" class="btn btn-sm btn-outline-danger"><i class="bi bi-x-lg"></i></button>
+                            </form>
                         </li>
                         
                         <?php endwhile; ?>
@@ -306,6 +284,73 @@
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="./src/js/bootstrap.bundle.js"></script>
+    <script>
+        document.addEventListener( 'DOMContentLoaded' , function() {
+            fetch( './dashboardCrud/gestionPreciosAjax.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'obtenerPrecios'
+                })
+            })
+            .then( response => {
+                if( response.status === 401 ){
+                    window.location.href = '/';
+                    return;
+                }
+                if ( !response.ok ) {
+                    document.getElementById('preciosRegist').innerHTML = '<p>Hubo un problema al cargar los datos.</p>';
+                }
+                return response.json();
+            } )
+            .then( data => {
+                document.getElementById('preciosRegist').innerHTML = data.res;
+            } )
+            .catch( error => console.error( 'Error: ', error ) );
+        });
+
+        let timeout = null;
+        document.getElementById( 'buscarPrecios' ). addEventListener( 'input', e => {
+            const palabra = e.target.value.trim();
+
+            clearTimeout( timeout );
+
+
+            timeout = setTimeout( () => {
+                buscarPrecios( palabra );
+            }, 400 );
+        } );
+
+        function buscarPrecios( palabra = '' ) {
+            fetch( './dashboardCrud/gestionPreciosAjax.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    action: 'obtenerPreciosFiltrados',
+                    buscar: palabra
+                })
+            })
+            .then( res => {
+                if( res.status === 401 ){
+                    window.location.href = '/';
+                    return;
+                }
+                if( !res.ok ){
+                    throw new Error('Error');
+                }
+                return res.json();
+            })
+            .then( data => {
+                if( !data )  return;
+                document.getElementById('preciosRegist').innerHTML = data.res;
+            } )
+            .catch( err => console.error( err ));
+        }
+    </script>
 </body>
 </html>

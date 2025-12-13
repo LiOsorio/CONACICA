@@ -1,0 +1,759 @@
+
+/* ==================================== */
+/* === ESTRUCTURA Y SCROLL ANIMATION === */
+/* ==================================== */
+
+
+.step {
+    min-height: 100vh;
+    padding: 0;
+
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.9s ease;
+    position: relative;
+}
+
+.step.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* SaBIAS QUE? SECCION */
+.section1 {
+    background-color: #E7A942; /* Verde Oscuro */
+    padding: 20px;
+     height: 100vh;
+
+}
+
+.section1 h1 {
+    font-size: 4rem;
+
+                        color:  #9f631a;
+
+        
+}
+
+.bg-gold h1 {
+    font-size: 4rem;
+
+                        color:  #9f631a;
+
+        
+}
+
+.section1 p {
+    font-size: 1.5rem;
+    
+
+}
+
+.section1 .row {
+    height: 100%;
+}
+
+.section1 .img-full {
+    height: 100%;
+    width: 100%;
+    background-image: url("../../img/imgAnimacion/ss2.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+/* FINAL SECCION */
+
+
+.sectionfinal {
+    background-color: #E7A942; /* Verde Oscuro */
+    padding: 20px;
+     height: 100vh;
+
+}
+
+.sectionfinal h1 {
+    font-size: 4rem;
+}
+
+.sectionfinal p {
+    font-size: 1.5rem;
+    
+
+}
+
+.sectionfinal .row {
+    height: 100%;
+}
+
+.sectionfinal .img-full {
+    height: 100%;
+    width: 100%;
+    background-image: url("../../img/imgAnimacion/jito.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+
+        .bg-olive .img-full {
+    width: 100%;
+    height: 100%;
+    min-height: 350px; /* opcional para que no se vea chaparra */
+    background-image: url("../../img/imgAnimacion/fruits.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.section1 .row {
+    height: 100%; 
+}
+
+
+
+
+
+.section1 h2, .section1 h3 {
+    font-size: 3em; /* Título más grande */
+            color: #1E5128; /* Verde Oscuro Profundo */
+            font-weight: 500;
+            line-height: 1.1; /* Ajuste para que respire */
+            margin-bottom: 20px;
+}
+
+
+/* Cuando aparece (Clase controlada por app.js) */
+.step.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ==================================== */
+/* === ESTILO TARJETA (Content Card) === */
+/* ==================================== */
+
+
+
+/* Estilo para el párrafo de descripción: Ahora permite 4 líneas */
+.content-card p {
+    flex-grow: 1; 
+    flex-shrink: 0; /* Evita que el párrafo se encoja forzadamente */
+    margin: 10px 0 15px 0;
+    line-height: 1.5;
+    
+    /* Limita el texto a 4 líneas */
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* CLAVE: Ahora muestra hasta 4 líneas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hero-card {
+    /* Estilo especial para la tarjeta de la intro */
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #38312B;
+}
+
+.illustration {
+    width: clamp(150px, 30vw, 250px);
+    margin-bottom: 30px;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.1));
+}
+
+/* ==================================== */
+/* === DATOS DE IMPACTO (Data Box) === */
+/* ==================================== */
+
+.data-box {
+    padding: 20px;
+    border: 2px solid #1E5128; 
+    background-color: #F7FFF7; /* Fondo muy claro para el dato */
+    border-radius: 10px;
+    max-width: 450px;
+    font-size: 0.95em;
+    line-height: 1.5;
+    color: #1E5128;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    /* Animación del data-box */
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+}
+
+.step.visible .data-box {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* ==================================== */
+/* === SECCIÓN HERO (Fondo de Imagen) === */
+/* ==================================== */
+
+/* HERO completo dividido en dos */
+.hero-split {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Parte del texto */
+.hero-top {
+    flex: 0 0 40%; /* 40% arriba, puedes ajustar */
+    background: #F6F4EE; /* Color crema limpio estilo editorial */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.hero-top h1 {
+    color: #000;
+    font-size: 4rem;
+}
+
+.hero-top h2 {
+    color: #333;
+    font-size: 2rem;
+}
+
+/* Imagen */
+.hero-bottom {
+    flex: 1;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: url(../../img/imgAnimacion/fondo4.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+
+
+
+/* ==================================== */
+/* === CIERRE Y CTA === */
+/* ==================================== */
+
+
+.cta-button {
+    display: inline-block;
+    background-color: #ded8c6;
+    color: #123219;
+    padding: 15px 30px;
+    text-decoration: none;
+    border: .5px solid #123219;
+    border-radius: 20px;
+    margin-top: 30px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.cta-button:hover {
+    background-color: #6f8b50;
+    color: #F0F5E6;
+    transform: translateY(-2px);
+}
+
+:root {
+    --color-principal: #b47194;
+    --color-fondo: #e3dfd3;
+    --tamano-circulo: 60vh;
+}
+
+
+/* CONTENEDOR RADIAL */
+.contenedor-radial {
+    position: relative;
+    min-height: calc(var(--tamano-circulo) + 100px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* CÍRCULO CENTRAL */
+.imagen-central {
+    width: var(--tamano-circulo);
+    height: var(--tamano-circulo);
+    border-radius: 50%;
+    overflow: hidden;
+    border: 15px solid var(--color-principal);
+    box-shadow: 0 0 0 5px white, 0 0 0 7px var(--color-principal);
+    z-index: 10;
+}
+
+.imagen-central img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* BLOQUES DE BENEFICIO */
+.beneficio {
+    position: absolute;
+    width: 220px;
+    line-height: 1.4;
+}
+
+
+
+/* IZQUIERDA */
+.b-izq { text-align: right; }
+.b-izq::after { right: 0; }
+.b-izq::before { right: 10px; }
+
+/* DERECHA */
+.b-der { text-align: left; }
+.b-der::after { left: 0; }
+.b-der::before { left: 10px; }
+
+/* POSICIONES DEFINITIVAS — PERFECTAMENTE CENTRADAS */
+/* POSICIONES DEFINITIVAS — SEPARADAS (más espaciado) */
+
+/* IZQUIERDA */
+.b-izq.b-top {
+    left: calc(55% - var(--tamano-circulo)/2 - 380px);
+    top: calc(40% - var(--tamano-circulo)/2 + 15px);
+}
+
+.b-izq.b-mid {
+    left: calc(53% - var(--tamano-circulo)/2 - 400px);
+    top: 35%;
+}
+
+.b-izq.b-bottom {
+    left: calc(55% - var(--tamano-circulo)/2 - 380px);
+    top: calc(30% + var(--tamano-circulo)/2 - 5px);
+}
+
+/* DERECHA */
+.b-der.b-top {
+    left: calc(30% + var(--tamano-circulo)/2 + 380px);
+    top: calc(40% - var(--tamano-circulo)/2 + 15px);
+}
+
+.b-der.b-mid {
+    left: calc(33% + var(--tamano-circulo)/2 + 400px);
+    top: 35%;
+}
+
+.b-der.b-bottom {
+    left: calc(30% + var(--tamano-circulo)/2 + 380px);
+    top: calc(30% + var(--tamano-circulo)/2 - 5px);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+    .contenedor-radial { min-height: auto; flex-direction: column; }
+    
+    .imagen-central {
+        width: 260px;
+        height: 260px;
+        margin-bottom: 30px;
+    }
+
+    .beneficio {
+        position: static;
+        width: 100%;
+        max-width: 330px;
+        margin: 15px auto;
+        text-align: center;
+    }
+
+    .beneficio::before,
+    .beneficio::after {
+        display: none;
+    }
+}
+
+
+
+        /* === AJUSTES DE TIPOGRAFÍA (Solución al "Se ve feo") === */
+        .header-content {
+            max-width: 800px; /* CLAVE: Limita el ancho para mejor legibilidad */
+            margin: 0 auto 50px auto;
+        }
+      
+
+        
+
+
+     /* CONTENEDOR */
+.card-flip-container {
+    width: 100%;
+    max-width: 450px;
+    height: 500px;
+    perspective: 1000px;
+    margin: auto;
+}
+
+/* TARJETA INTERNA */
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+/* GIRO */
+.card-flip-container:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* CARAS */
+.card-front, 
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+/* FRENTE - blanco */
+.card-front {
+    background: white;
+    transform: rotateY(0deg);
+    
+}
+.card-front h2{
+    font-size: 2.5rem;
+}
+
+/* ATRÁS - verde */
+.card-back {
+    background: #1E5128;
+    color: white;
+    transform: rotateY(180deg);
+}
+
+/* Asegura que todos los encabezados dentro de la cara trasera sean blancos */
+.card-back h2, .card-back h3 {
+    color: white !important; /* Usamos !important por si hay reglas de h2 generales */
+    margin-bottom: 10px;
+    font-size: 2rem;
+}
+
+/* Estilo para el párrafo de la cara trasera */
+.card-back p {
+    color: white;
+    font-size: 1.1em;
+    line-height: 1.6;
+    
+    /* Deshacemos la limitación de líneas de la cara frontal para que el texto se vea completo */
+    display: block; 
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+    overflow: visible;
+    text-overflow: unset;
+}
+
+
+/* -------------------- 1. Contenedor de la Tarjeta (Estático) -------------------- */
+.card-flip-container {
+    /* Define el tamaño de la tarjeta (ajustado para Bootstrap) */
+    width: 70%; /* Ocupa todo el ancho de la columna col-md-6 */
+    max-width: 400px; /* Limita el tamaño máximo para que no sea demasiado grande */
+    height: 450px; /* Mantenemos una altura fija para igualar visualmente el círculo */
+    perspective: 1000px; 
+    margin: auto; /* Centra la tarjeta dentro de la columna */
+}
+
+.card-front img,
+.card-back img,
+.illustration {
+    width: 100%;       /* se ajusta al ancho de la card */
+    height: auto;      /* mantiene proporciones */
+    max-height: 180px; /* controla altura (ajústalo a tu gusto) */
+    object-fit: contain; /* evita que se deforme */
+    margin-bottom: 15px;
+}
+
+
+
+
+
+/* === TIMELINE DÚO (LA ESTRUCTURA CLAVE) === */
+        /* ==================================== */
+        
+        .timeline-step {
+            display: flex;
+            flex-direction: column; /* Por defecto, apilado para móvil */
+            gap: 20px;
+            align-items: center;
+            padding: 60px 60px;
+            max-width: 100%;
+            margin: 0;
+            border-left: 2px solid #D6973A; /* Línea central (solo decorativa) */
+            position: relative;
+        }
+        
+        /* Contenedor Flex para Desktop */
+        @media (min-width: 900px) {
+            .timeline-step {
+                flex-direction: row; /* Diseño de dos columnas */
+                justify-content: space-between;
+                align-items: flex-start;
+                padding: 100px 40px;
+            }
+        }
+        
+        /* Reordenar las columnas en pasos alternados */
+        .timeline-step:nth-child(even) {
+            background-color: #D6973A; /* Un poco de contraste para los pasos pares */
+        }
+        
+        .bg-gold{
+                        background-color: #CC9F31; /* Un poco de contraste para los pasos pares */
+
+        }
+
+
+        /* Reordenar la imagen y el texto en el segundo paso */
+        .timeline-step:nth-child(even) > .img-column {
+            order: 2;
+        }
+        .timeline-step:nth-child(even) > .text-column {
+            order: 1;
+        }
+
+        /* Columnas de Contenido */
+        .img-column, .text-column {
+            width: 100%;
+            max-width: 500px;
+        }
+        
+        @media (min-width: 900px) {
+            .img-column, .text-column {
+                width: 50%;
+            }
+            .text-column {
+                padding: 0 40px; /* Separación central */
+            }
+        }
+
+        /* Estilos del Círculo de Imagen */
+        .circle-image-container {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid var(--color-dorado);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin: 0 auto;
+        }
+        
+        .circle-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .circle-image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Estilo de la Card de Historia */
+        .history-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            border-left: 5px solid var(--color-verde-oscuro);
+        }
+
+        .data-point {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #F0F5E6;
+            border-left: 3px solid var(--color-dorado);
+            font-size: 0.9em;
+        }
+
+
+/* === AJUSTES BODY Y LETRAS === */
+
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--color-fondo);
+            margin: 0;
+            line-height: 1.6;
+            padding-bottom: 0;
+        }
+
+        h1 {
+            font-family: "Roboto", sans-serif;
+            font-size: 3rem;
+            color: #000;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+
+        }
+
+        h2 {
+            font-family: "Roboto", sans-serif;
+            font-size: 2rem;
+            color: var(--color-dorado);
+            margin-top: 0;
+            margin-bottom: 15px;
+              font-weight: 500;
+
+        }
+
+        p{
+              font-family: "Quicksand", sans-serif;
+              font-size: 1.5rem;
+              font-weight: 500;
+              color: #000;
+
+        }
+
+
+
+
+
+
+
+/* CONTENEDOR DE LA IMAGEN */
+.img-wrapper {
+    width: 100%;
+    max-width: 900px;           /* límite bonito para pantallas grandes */
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    padding: 50px;  
+}
+
+
+
+
+
+
+
+/* IMAGEN INTERNA */
+.img-rounded {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;               /* bordes redondeados suaves */
+}
+
+
+#carouselanim {
+    height: 100vh;
+    padding:0 ;
+
+}
+
+#carouselanim .carousel-inner,
+#carouselanim .carousel-item,
+#carouselanim img {
+    height: 100%;
+
+}
+
+#carouselanim img {
+    object-fit: cover;
+}
+
+
+.bg-imagen {
+    flex: 1;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    background: url(../../img/imgAnimacion/fondo5.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.bg-gray{
+    background: #D5D1C8;
+}
+
+.bg-gray h1{
+    color: #b47194;
+    font-size: 4rem;
+}
+
+.bg-gray h2{
+    color: #6b3350;
+    font-size: 1.2rem;
+    font-family: "Quicksand", sans-serif;
+
+}
+.bg-gray p{
+    font-size: 1.2rem;
+}
+
+.bg-yellow{
+    background: #e0b45d;
+    
+}
+
+.bg-age{
+    background: #8BAE66;
+}
+
+.bg-olive{
+    background: #888308;
+    color: #2a2905;
+}
+
+.bg-olive h1, .bg-olive h2{
+    color: #2a2905;
+}
+
+
+.bg-wh{
+background: #f9e3b6;
+}
+
+.bg-dirty{
+    background: #b2711f;
+}
+.content-wrapper {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    background: url('../../img/imgAnimacion/fondo1.jpg') center/cover; 
+    padding: 0;
+}
+
+.glass-pane {
+    background: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+    
+    backdrop-filter: blur(15px); 
+    margin: 0;
+
+    height: 100dvh;
+}
+
+.glass-pane h2{
+    font-size: 3rem;
+}
+
+.carousel-item img {
+  height: 450px;       /* ajusta si quieres */
+  object-fit: cover;  /* evita saltos */
+}

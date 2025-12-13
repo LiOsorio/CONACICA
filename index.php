@@ -18,8 +18,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CONACICA</title>
 
+  <link rel="icon" href="img/logo-6.jpg" type="image/jpg">
+
   <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="./src/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   
   <!-- FontAwesome -->
@@ -27,7 +29,7 @@
   <link rel="font" href="./src/fonts/Ethnocentric-Regular.otf">
 
   <!-- Estilos personalizados -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="./src/css/style.css">
 </head>
 <body>
 
@@ -51,7 +53,7 @@
                     Uniendo a Centrales de Abasto, Transportistas, Productores Agrícolas y Mercados Públicos de México.
                 </p>
                 
-                <a href="#" class="btn btn-lg rounded-pill btn-cta-hero">Conoce a CONACICA</a>
+                <a href="animacion.html" target="_blank" class="btn btn-lg rounded-pill btn-cta-hero">Conoce su importancia</a>
             </div>
 
         </div>
@@ -291,7 +293,7 @@
                       <?php if( !empty($_SESSION['userId']) ): ?>
                         <button class="btn btn-warning rounded-pill m-3" data-bs-toggle="modal" data-bs-target="#modalEditarPromocional">Editar Promocional</button>
                       <?php endif; ?>
-                      <a href="<?php echo $res['url'] ?>" class="btn btn-lg rounded-pill btn-cta-hero1 m-3">Conócenos</a>
+                      <a href="<?php echo $res['url'] ?>" target="_blank" class="btn btn-lg rounded-pill btn-cta-hero1 m-3">Conócenos</a>
                     </div>
                 </div>
             </div>
@@ -470,8 +472,8 @@
 
   <!-- SCRIPTS -->
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="alianzas.js"></script>
-  <script src="animations.js"></script>
+  <script src="./src/js/bootstrap.bundle.js"></script>
+  <script src="./src/js/alianzas.js"></script>
+  <script src="./src/js/animations.js"></script>
 </body>
 </html>

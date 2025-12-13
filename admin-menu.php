@@ -11,7 +11,7 @@
             <a class="nav-link" href="admin-avisos-comunitarios.php">Avisos Comunitarios</a>
             <a class="nav-link" href="#">Participaciones</a>
             <a class="nav-link" href="admin-mensajes.php">Mensajes</a>
-            <a class="nav-link" href="#">Configuración</a>
+            <!-- <a class="nav-link" href="#">Configuración</a> -->
             <a class="nav-link text-light fw-semibold mt-3" href="logout.php">Cerrar sesión</a>
         </nav>
     </div>
