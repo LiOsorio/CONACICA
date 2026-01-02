@@ -160,7 +160,7 @@
       <div class="modal-dialog modal-xl modal-centered">
           <div class="modal-content border-0 shadow login-modal m-3">
               <form action="./dashboardCrud/editBlog.php" method="POST" enctype="multipart/form-data">
-                <input type="text" value="participaciones" name="action" hidden >
+                <input type="text" value="editarImgPrincipal" name="action" hidden >
                 <div class="text-center mb-3">
                     <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
                     <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar Imágen de Noticias </h5>
@@ -172,8 +172,8 @@
                     <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/fresa.jpg" alt="Imagen blog">
                   </div>
                   <div class="col-4 d-flex flex-column justify-content-center mx-auto">
-                    <label for="imgAvisos" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
-                    <input type="file" id="imgBlog" name="imgAvisos" accept="image/jpeg, image/png, image/webp" placeholder="Ingresa la imagen a mostrar">
+                    <label for="imgPrincipalBlog" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
+                    <input type="file" id="imgPrincipalBlog" name="imgPrincipalBlog" accept="image/jpeg, image/png, image/webp" placeholder="Ingresa la imagen a mostrar">
                   </div>
                 </div>
                 <div class="d-flex justify-content-end gap-2 m-3">
@@ -219,7 +219,7 @@
       <div class="modal-dialog modal-xl modal-centered">
           <div class="modal-content border-0 shadow login-modal m-3">
               <form action="./dashboardCrud/editBlog.php" method="POST" enctype="multipart/form-data">
-                <input type="text" value="participaciones" name="action" hidden >
+                <input type="text" value="ImgAvisosCambiar" name="action" hidden >
                 <div class="text-center mb-3">
                     <img src="logo.png" width="150" height="150" alt="Logo de la empresa" class="img-fluid mb-2">
                     <h5 class="fw-bold text-primary-custom" style="font-size: 35px;">Modificar Imágen de Avisos Comunitarios</h5>

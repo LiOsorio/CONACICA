@@ -40,7 +40,15 @@
             if( $_FILES['imgNosotros']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgNosotros']['name'] ) ){
                 $mime = mime_content_type( $_FILES['imgNosotros']['tmp_name'] );
                 if( !in_array( $mime, $acceptedTypes ) ){
-                    $error = "Solo se aceptan imagenes tipo PNG/JPEG/JPG";
+                    $error = "Solo se aceptan imagenes tipo PNG/JPEG/JPG/WEBPspuesta a tu mensaje
+
+Hemos revisado el mensaje que nos enviaste y a continuación te compartimos nuestra respuesta.
+Asunto
+
+hola
+Respuesta
+
+";
                     header( 'Location: /' );
                     exit;
                 }
