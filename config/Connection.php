@@ -2,9 +2,9 @@
 
     function connection() {
         $host = 'localhost';
-        $user = 'root';
-        $pwd = '428655';
-        $db = 'conacica';
+        $user = 'root'; //'u715629485_root';
+        $pwd = '428655';//'Gerardo101010?';
+        $db =  'conacica'; //'u715629485_conacica';
         $charset = 'utf8mb4';
 
         $dbConf = "mysql:host=$host;dbname=$db;charset=$charset";
