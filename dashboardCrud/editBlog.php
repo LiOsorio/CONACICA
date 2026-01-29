@@ -9,10 +9,10 @@
     $locationBlog = 'Location: ./../admin-blog.php';
     $error = '';
     $fileSizeLimit = 1024 * 1024 * 3;
-    $acceptedTypes = [ 'image/jpg', 'image/png', 'image/jpeg' ];
+    $acceptedTypes = [ 'image/jpg', 'image/png', 'image/jpeg', 'image/webp' ];
     $mime;
-    $locationBlogImg = './../img/imgBlog/imgPrincipalBlog.webp';
-    $locationImgAvisos = './../img/imgBlog/imgAvisosComunitarios.webp';
+    $locationBlogImg = __DIR__ . '/../img/imgBlog/imgPrincipalBlog.webp';
+    $locationImgAvisos = __DIR__ . '/../img/imgBlog/imgAvisosComunitarios.webp';
 
     if( !isset( $_SESSION['userId'] ) || empty( $_SESSION['userId'] ) ){
         header( "Location: /" );
@@ -149,8 +149,8 @@
             }
         }
 
-        if( $_POST['action'] === 'imgAvisosCambiar' ){
-            if( $_FILES['imgAvisos']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgPrincipalBlog']['name'] ) ){
+        if( $_POST['action'] === 'ImgAvisosCambiar' ){
+            if( $_FILES['imgAvisos']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgAvisos']['name'] ) ){
                 $mime = mime_content_type( $_FILES['imgAvisos']['tmp_name'] );
                 if( !in_array( $mime, $acceptedTypes ) ){
                     $_SESSION['error'] =  'Solo se aceptan imágenes de tipo PNG, JPG, JPEG y WEBP';
@@ -170,21 +170,21 @@
 
             if( $mime === 'image/jpeg' || $mime === 'image/jpg' ){
                 $image = imagecreatefromjpeg( $_FILES['imgAvisos']['tmp_name'] );
-                imagewebp( $image, $locationBlogImg, 50 );
+                imagewebp( $image, $locationImgAvisos, 50 );
                 header( $locationBlog );
                 exit;
             }
 
             if( $mime === 'image/png' ){
                 $image = imagecreatefrompng( $_FILES['imgAvisos']['tmp_name'] );
-                imagewebp( $image, $locationBlogImg, 50 );
+                imagewebp( $image, $locationImgAvisos, 50 );
                 header( $locationBlog );
                 exit;
             }
 
             if( $mime === 'image/webp' ){
-                $image = imagecreatefrompng( $_FILES['imgPrincipalBlog']['tmp_name'] );
-                imagewebp( $image, $locationBlogImg, 50 );
+                $image = imagecreatefrompng( $_FILES['imgAvisos']['tmp_name'] );
+                imagewebp( $image, $locationImgAvisos, 50 );
                 header( $locationBlog );
                 exit;
             }

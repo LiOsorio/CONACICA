@@ -135,7 +135,7 @@
       
       <!-- Columna izquierda: IMAGEN -->
       <div class="col-md-6 mb-4 mb-md-0">
-        <img src="./img/fresa.jpg" class="img-fluid rounded" alt="Noticia completa">
+        <img src="./img/imgBlog/imgPrincipalBlog.webp" class="img-fluid rounded" alt="Noticia completa">
       </div>
 
       <!-- Columna derecha: TEXTO -->
@@ -169,7 +169,7 @@
                 <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
                   <div class="col-6 d-flex justify-content-center flex-column mx-auto">
                     <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
-                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/fresa.jpg" alt="Imagen blog">
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/imgBlog/imgPrincipalBlog.webp" alt="Imagen blog">
                   </div>
                   <div class="col-4 d-flex flex-column justify-content-center mx-auto">
                     <label for="imgPrincipalBlog" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
@@ -195,7 +195,7 @@
       <div class="row align-items-start">
         <!-- Columna izquierda: IMAGEN -->
         <div class="col-md-6 mb-4 mb-md-0">
-          <img src="./img/eventos-2.jpg" class="img-fluid rounded" alt="Noticia completa">
+          <img src="./img/imgBlog/imgAvisosComunitarios.webp" class="img-fluid rounded" alt="Noticia completa">
         </div>
 
         <!-- Columna derecha: TEXTO -->
@@ -228,7 +228,7 @@
                 <div class="d-flex flex-column flex-md-row col-12 justify-content-center gap-2">
                   <div class="col-6 d-flex justify-content-center flex-column mx-auto">
                     <p class="fw-bold text-center" style="font-size: 20px;">Imágen actual</p>
-                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/eventos-2.jpg" alt="Imagen avisos">
+                    <img style="width: auto; height: fit; object-fit:contain; object-position: center center; display: block;" src="./img/imgBlog/imgAvisosComunitarios.webp" alt="Imagen avisos">
                   </div>
                   <div class="col-4 d-flex flex-column justify-content-center mx-auto">
                     <label for="imgAvisos" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
@@ -367,7 +367,7 @@ En CONACICA creemos firmemente que el desarrollo social también se construye de
 <!-- MODAL CREAR / EDITAR NOTICIA -->
 <div class="modal fade" id="modalAdminNoticia" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
-    <div class="modal-content">
+    <form class="modal-content" action="./dashboardCrud/noticias.php">
 
       <div class="modal-header bg-green text-white">
         <h5 class="modal-title" id="modalTitulo">Editar noticia</h5>
@@ -379,33 +379,32 @@ En CONACICA creemos firmemente que el desarrollo social también se construye de
 
         <div class="mb-3">
           <label class="form-label">Imagen</label>
-          <input type="file" class="form-control">
+          <input type="file" name="imgNoticia" accept="image/jpeg,image/png,image/webp" class="form-control" >
         </div>
 
         <div class="mb-3">
           <label class="form-label">Título</label>
-          <input type="text" class="form-control" id="inputTitulo">
+          <input type="text" class="form-control" id="inputTitulo" name="inputTitulo">
         </div>
 
         <div class="mb-3">
           <label class="form-label">Fecha</label>
-          <input type="text" class="form-control" id="inputFecha">
+          <input type="text" class="form-control" id="inputFecha" name="inputFecha">
         </div>
 
         <div class="mb-3">
           <label class="form-label">Contenido</label>
-          <textarea class="form-control" rows="6" id="inputTexto"></textarea>
+          <textarea class="form-control" rows="6" id="inputTexto" name="inputTexto"></textarea>
         </div>
       </div>
 
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-success">
+        <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-success" type="submit">
           <i class="bi bi-save"></i> Guardar cambios
         </button>
       </div>
-
-    </div>
+    </form>
   </div>
 </div>
 

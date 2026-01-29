@@ -326,7 +326,7 @@
                   </div>
                   <div class="col-4 d-flex flex-column justify-content-center mx-auto">
                     <label for="imgPromocional" class="fw-bold " style="font-size: 20px;">Imagen a mostrar:</label>
-                    <input type="file" id="imgPromocional" name="imgPromocional" accept="image/jpeg, image/png,image/webp" placeholder="Ingresa la imagen a mostrar">
+                    <input type="file" id="imgPromocional" name="imgPromocional" accept="image/jpeg,image/png,image/webp" placeholder="Ingresa la imagen a mostrar">
                   </div>
                 </div>
                 <div class="d-flex justify-content-end gap-2 m-3">

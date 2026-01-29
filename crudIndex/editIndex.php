@@ -34,21 +34,13 @@
     if( $_SERVER['REQUEST_METHOD'] === 'POST' ){
         if( $_POST['action'] === 'nosotros' ){
 
-            $imageFolder = '../img/indexImg/nosotros.webp';
-            $newFile = "../img/indexImg/nosotros.webp";
+            $imageFolder = __DIR__ . '/../img/indexImg/nosotros.webp';
+            $newFile = __DIR__ . "/../img/indexImg/nosotros.webp";
 
             if( $_FILES['imgNosotros']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgNosotros']['name'] ) ){
                 $mime = mime_content_type( $_FILES['imgNosotros']['tmp_name'] );
                 if( !in_array( $mime, $acceptedTypes ) ){
-                    $error = "Solo se aceptan imagenes tipo PNG/JPEG/JPG/WEBPspuesta a tu mensaje
-
-Hemos revisado el mensaje que nos enviaste y a continuación te compartimos nuestra respuesta.
-Asunto
-
-hola
-Respuesta
-
-";
+                    $error = "Solo se aceptan imagenes tipo PNG/JPEG/JPG/WEBPspuesta a tu mensaje";
                     header( 'Location: /' );
                     exit;
                 }
@@ -85,7 +77,7 @@ Respuesta
 
         if( $_POST['action'] === 'participaciones' ){
 
-            $imgDir = "../img/indexImg/participaciones.webp";
+            $imgDir = __DIR__ . "/../img/indexImg/participaciones.webp";
 
             if( $_FILES['imgParticipaciones']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgParticipaciones']['name'] ) ){
                 $mime = mime_content_type( $_FILES['imgParticipaciones']['tmp_name'] );
@@ -130,7 +122,7 @@ Respuesta
                 exit;
             }
 
-            $imgDir = "../img/indexImg/promocional.webp";
+            $imgDir = __DIR__ . "/../img/indexImg/promocional.webp";
 
             if( $_FILES['imgPromocional']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgPromocional']['name'] ) ){
                 $mime = mime_content_type( $_FILES['imgPromocional']['tmp_name'] );
@@ -184,7 +176,7 @@ Respuesta
             $error;
             ( !isset( $_POST['nombreNuevaAlianza'] ) || empty( $_POST['nombreNuevaAlianza'] ) ) ? $error = 'El nombre de la alianza no es valido.' : $nombreAlianza = $_POST["nombreNuevaAlianza"];
             
-            $imgDir = "../img/indexImg/alianzas/".$nombreAlianza .".webp";
+            $imgDir = __DIR__ . "../img/indexImg/alianzas/".$nombreAlianza .".webp";
 
             if( $error !== '' ){
                 $_SESSION['error'] = $error;

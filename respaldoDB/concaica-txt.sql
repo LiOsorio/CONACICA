@@ -60,3 +60,10 @@ create table avisos (
 	evidencia varchar(255)
 );
 
+CREATE TABLE noticias (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+	titulo varchar(150),
+	fecha date,
+	contenido text,
+	imagen varchar(200)
+);

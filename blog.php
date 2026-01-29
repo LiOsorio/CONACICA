@@ -118,7 +118,7 @@
       
       <!-- Columna izquierda: IMAGEN -->
       <div class="col-md-6 mb-4 mb-md-0">
-        <img src="./img/fresa.jpg" class="img-fluid rounded" alt="Noticia completa">
+        <img src="./img/imgBlog/imgPrincipalBlog.webp" class="img-fluid rounded" alt="Noticia completa">
       </div>
 
       <!-- Columna derecha: TEXTO -->
@@ -170,7 +170,7 @@
       
       <!-- Columna izquierda: IMAGEN -->
       <div class="col-md-6 mb-4 mb-md-0">
-        <img src="./img/eventos-2.jpg" class="img-fluid rounded" alt="Noticia completa">
+        <img src="./img/imgBlog/imgAvisosComunitarios.webp" class="img-fluid rounded" alt="Noticia completa">
       </div>
 
       <!-- Columna derecha: TEXTO -->

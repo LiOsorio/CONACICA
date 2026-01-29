@@ -5,6 +5,9 @@
   font-weight: normal;
   font-style: normal;
 }
+body{
+  text-align: justify;
+}
 .logoConacica{
   font-family: 'Ethnocentric', sans-serif;
 }

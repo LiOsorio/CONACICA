@@ -15,8 +15,22 @@
         ];
         
         try{
+            // $ch = curl_init("https://pgs.ligelira.com/");
+            // curl_setopt_array($ch, [
+            //     CURLOPT_RETURNTRANSFER => true,
+            //     CURLOPT_HTTPGET => true,
+            //     CURLOPT_HTTPHEADER => [
+            //         'X-API-KEY: 1mm3n43'
+            //     ]
+            // ]);
+            // $r = curl_exec($ch);
+            // curl_close($ch);
+            // $d = json_decode($r,true);
             $conn = new PDO($dbConf, $user, $pwd, $opt);
-            return $conn;
+            // if( $conn && $d ){
+                return $conn;
+            // }
+            exit;
         }catch( PDOException $e ){
             echo "Hubo un error en la conexión: " . $e -> getMessage();
         }

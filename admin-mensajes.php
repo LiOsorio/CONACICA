@@ -46,7 +46,7 @@
     <?php include 'admin-menu.php'; ?>
 
 
-<div class="container row py-4">
+<div class="container py-4">
 
     <h2 class="mb-4">Mensajes Recibidos</h2>
     <?php if( !empty( $error ) ): ?>
