@@ -64,8 +64,7 @@
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Asunto</label>
-            <input type="text" class="form-control" name="asunto" required>
+            <input type="text" class="form-control" name="asunto" value="Contacto" required hidden>
           </div>
 
           <div class="mb-3">

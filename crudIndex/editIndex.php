@@ -4,8 +4,8 @@
     include_once(__DIR__ . "/../config/Connection.php");
 
     $conn = connection();
-    $fileSizeLimit = 1024 * 1024 * 3;
-    $acceptedTypes = [ 'image/jpg', 'image/png', 'image/jpeg' ];
+    $fileSizeLimit = 1024 * 1024 * 4;
+    $acceptedTypes = [ 'image/jpg', 'image/png', 'image/jpeg', 'image/webp' ];
     $mime;
     $error = '';
     
@@ -40,7 +40,7 @@
             if( $_FILES['imgNosotros']['error'] === UPLOAD_ERR_OK && !empty( $_FILES['imgNosotros']['name'] ) ){
                 $mime = mime_content_type( $_FILES['imgNosotros']['tmp_name'] );
                 if( !in_array( $mime, $acceptedTypes ) ){
-                    $error = "Solo se aceptan imagenes tipo PNG/JPEG/JPG/WEBPspuesta a tu mensaje";
+                    $error = "Solo se aceptan imagenes tipo PNG/JPEG/JPG/WEBP";
                     header( 'Location: /' );
                     exit;
                 }

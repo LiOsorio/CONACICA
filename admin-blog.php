@@ -367,11 +367,11 @@ En CONACICA creemos firmemente que el desarrollo social también se construye de
 <!-- MODAL CREAR / EDITAR NOTICIA -->
 <div class="modal fade" id="modalAdminNoticia" tabindex="-1">
   <div class="modal-dialog modal-lg modal-dialog-centered">
-    <form class="modal-content" action="./dashboardCrud/noticias.php">
-
+    <form class="modal-content" method="post" action="./dashboardCrud/noticias.php" enctype="multipart/form-data">
+      <input type="text" name="action" value="nuevaNoticia"hidden>
       <div class="modal-header bg-green text-white">
         <h5 class="modal-title" id="modalTitulo">Editar noticia</h5>
-        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        <button class="btn-close btn-close-white" type="button" data-bs-dismiss="modal"></button>
       </div>
 
       <div class="modal-body">
@@ -384,17 +384,17 @@ En CONACICA creemos firmemente que el desarrollo social también se construye de
 
         <div class="mb-3">
           <label class="form-label">Título</label>
-          <input type="text" class="form-control" id="inputTitulo" name="inputTitulo">
+          <input type="text" class="form-control" id="inputTitulo" name="titulo">
         </div>
 
         <div class="mb-3">
           <label class="form-label">Fecha</label>
-          <input type="text" class="form-control" id="inputFecha" name="inputFecha">
+          <input type="date" class="form-control" id="inputFecha" name="fecha">
         </div>
 
         <div class="mb-3">
           <label class="form-label">Contenido</label>
-          <textarea class="form-control" rows="6" id="inputTexto" name="inputTexto"></textarea>
+          <textarea class="form-control" rows="6" id="inputTexto" name="texto"></textarea>
         </div>
       </div>
 
